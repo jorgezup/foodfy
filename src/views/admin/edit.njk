@@ -1,0 +1,30 @@
+{% extends "admin/layout-admin.njk" %}
+
+{% block content %}
+
+	<h2>Editando receita</h2>
+	<form action="/admin/receitas?_method=PUT" method="POST">
+		<input type="hidden" name="id" value="{{data.id}}">
+
+		<label>Imagem da receita</label>
+		<input type="text" name="imagem_receita" value="{{data.imagem_receita}}">
+
+		<label>Ingredientes</label>
+		<input type="text" name="ingrediente_receita" value="{{data.ingrediente_receita}}">
+		<a href="#" class="adicionar">Adicionar novo ingrediente</a>
+
+		<label>Modo de preparo</label>
+		<input type="text" name="modo_preparo_receita" value="{{data.modo_preparo_receita}}">
+		<a href="#" class="adicionar">Adicionar novo passo</a>
+
+		<label>Informações Adicionais</label>
+		<textarea name="informacoes_receita" cols="30" rows="10" >{{data.informacoes_receita}}</textarea>
+		<div class="botoes">
+			<button type="submit" class="salvar">Salvar receita</button>
+		</form>
+		<form action="/admin/receitas?_method=DELETE" method="POST">
+			<input type="hidden" name="id" value="{{data.id}}">
+			<button type="submit" class="delete">Deletar receita</button>
+		</form>
+		</div>
+{% endblock %}
