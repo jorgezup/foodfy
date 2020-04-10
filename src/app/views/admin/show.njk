@@ -1,0 +1,43 @@
+{% extends "admin/layout-admin.njk" %}
+
+{% block content %}
+    
+        <h2>Exibindo receita</h2>
+        <div class="botoes">
+        <button class="button salvar">
+            <a href="/admin/receitas/{{recipe.id}}/edit" >Editar receita</a>
+        </button>
+        </div>
+
+        <label>ID do Chef</label>
+             <div>{{recipe.chef_id}}</div>
+        
+        
+        <label>Imagem da receita</label>
+        <div><img src="{{recipe.image}}" alt=""></div>
+
+        <label>Título da Receita</label>
+        <div>{{recipe.title}}</div>
+
+         <label>Autor</label>
+        <div>{{recipe.autor}}</div>
+
+        <label>Ingredientes</label>
+        <div>
+        {%for ingredient in recipe.ingredients%}
+            <p>{{ingredient}}</p>
+        {%endfor%}
+        </div>
+
+        <label>Modo de preparo</label>
+        <div>
+        {%for prepar in recipe.preparation%}
+            <p>{{prepar}}</p>
+        {%endfor%}
+        </div>
+
+        <label>Informações Adicionais</label>
+        <div>{{recipe.information}}</div>
+
+
+{% endblock %}

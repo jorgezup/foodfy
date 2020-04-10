@@ -14,10 +14,10 @@
     <div class="grid">
         {% for receita in receitas %}
             <div class="container-grid">
-                <img src={{receita.imagem_receita}} alt="Imagem Receita">
+                <img src={{receita.image}} alt="Imagem Receita">
                 <div class="informacoes-receita">
                     <p>{{receita.title}}</p>
-                    <small>{{receita.author}}</small>
+                    <small>{{receita.chef_id}}</small>
                     <a href="/admin/receitas/{{receita.id}}">Visualizar</a>
                 </div>
             </div>

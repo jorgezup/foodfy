@@ -4,13 +4,19 @@
 
 	<h2>Criando receita</h2>
 	<form action="/admin/receitas" method="POST">
+		<label>ID do Chef</label>
+		<input type="number" name="chef_id">
+
 		<label>Imagem da receita</label>
-		<input type="text" name="imagem_receita">
+		<input type="text" name="image">
+
+		<label>Título da Receita</label>
+		<input type="text" name="title">
 
 		<label>Ingredientes</label>
 		<div id="ingredientes">
 			<div class="ingrediente">
-				<input type="text" name="ingredientes[]" value="" >
+				<input type="text" name="ingredients[]" value="" >
 			</div>
 		</div>
 		<button type="button" class="adicionar-ingrediente">Adicionar novo ingrediente</button>
@@ -18,13 +24,13 @@
 		<label>Modo de preparo</label>
 		<div id="passos">
 			<div class="passo">
-				<input type="text" name="modo_preparo_receita[]" value="">
+				<input type="text" name="preparation[]" value="">
 			</div>
 		</div>
 		<button type="button" class="adicionar-passo">Adicionar passo</button>
 		
 		<label>Informações Adicionais</label>
-		<textarea name="informacoes_receita" cols="30" rows="10"></textarea>
+		<textarea name="information" cols="30" rows="10"></textarea>
 		
 		<div class="botoes">
 			<button type="submit" class="salvar">Salvar receita</button>
