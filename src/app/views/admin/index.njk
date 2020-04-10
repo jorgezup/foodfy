@@ -5,6 +5,15 @@
         <h2>Gerenciar receitas</h2>
 
         <div class="botoes">
+            <form action="/admin/receitas" method="GET">
+                <input 
+                    type="text" 
+                    name="filter"
+                    placeholder="Filtrar por nome ou aula"
+                    value = {{filter}}
+                >
+                <button type="submit">Filtrar</button>
+            </form>
             <button class="button salvar">
                 <a  href="/admin/receitas/create">Nova Receita</a>
             </button>
@@ -24,4 +33,14 @@
         {% endfor %}
     </div>
 
+    <div class="pagination"
+        data-page = {{pagination.page}}
+        data-total = {{pagination.total}}
+        data-filter = {{filter}}
+    ></div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="/scripts.js"></script>
 {% endblock %}

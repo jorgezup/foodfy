@@ -51,6 +51,15 @@ module.exports = {
         })
     },
 
+    findByName(filter, callback) {
+        db.query(`
+        SELECT * FROM recipes WHERE title ILIKE '%${filter}%'
+        `, function (err, results) {
+            if (err) throw `Database Error! ${err}`
+            callback(results.rows)
+        })
+    },
+
     update(data, callback) {
         const query = `
             UPDATE recipes SET
@@ -72,7 +81,7 @@ module.exports = {
             data.id
         ]
 
-        db.query(query, values, function(err, results) {
+        db.query(query, values, function (err, results) {
             if (err) throw `Database Error! ${err}`
 
             callback()
@@ -83,10 +92,43 @@ module.exports = {
         const query = `DELETE FROM recipes WHERE id = $1`
         values = [id]
 
-        db.query (query, values, function(err, results) {
+        db.query(query, values, function (err, results) {
             if (err) throw `Database Error! ${err}`
 
             return callback()
+        })
+    },
+
+    paginate(params) {
+        const { filter, limit, offset, callback } = params
+
+        let query = "",
+            filterQuery = "",
+            totalQuery = `(
+                SELECT count(*) FROM recipes
+            ) AS total `
+
+        if (filter) {
+            filterQuery = `${query}
+            WHERE recipes.title ILIKE '%${filter}%' 
+            `
+            totalQuery = `(
+                SELECT count(*) FROM recipes
+                ${filterQuery}
+            )AS total`
+        } 
+
+        query = `
+            SELECT recipes.*, ${totalQuery} FROM recipes 
+            ${filterQuery}
+            LIMIT $1 OFFSET $2
+        `
+        
+
+        db.query(query, [limit, offset], function (err, results) {
+            if (err) throw `Database Error ${err}`
+
+            callback(results.rows)
         })
     }
 }
