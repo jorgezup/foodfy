@@ -3,22 +3,30 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/admin.css">
-        {% block head %}
-            
-        {% endblock %}
+        <link rel="stylesheet" href="/styles/basic.css">
+        <link rel="stylesheet" href="/styles/admin/layout.css">
+        {% block head %}{% endblock %}
         <title>Foodfy - Admin</title>
     </head>
     <body>
-        <header>
-            <ul>
-                <li><img src="../../logo.png" alt="Logo Foodfy"></li>
-            </ul>
-        </header>
+        <div class="admin">
+            <header class="container">
+                <ul>
+                    <li>
+                        <a href="/"><img src="/logo.png" alt="Logo Foodfy"></a>
+                    </li>
+                    <li>
+                        <a href="/admin/recipes">Receitas</a>
+                    </li>
+                    <li>
+                        <a href="/admin/chefs">Chefs</a>
+                    </li>
+                </ul>
+            </header>
+        </div>
         <main>
             {% block content %}{% endblock %}
         </main>
     </body>
-     {% block script %}
-{% endblock %}
+    {% block script %}{% endblock %}
 </html>

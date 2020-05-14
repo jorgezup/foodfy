@@ -1,0 +1,143 @@
+div.admin {
+    background-color: var(--principal-color);
+    height: 80px;
+}
+
+div.admin header.container ul {
+    display: flex;
+
+    margin-top: 27px;
+}
+
+div.admin header.container ul li{
+    align-self: center;
+}
+
+div.admin header.container ul li:nth-child(1) {
+    margin-right: 50px;
+}
+
+div.admin header.container ul li:nth-child(2){
+    margin-right: 30px;
+}
+
+
+div.admin header li a {
+    color: white;
+    width: 100%;
+
+    font-weight: bold;
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+
+    text-transform: uppercase;
+}
+
+/*  H2 da página e botões */
+div.container div.title {
+    margin: 55px 0 24px 0;
+
+    display: flex;
+}
+
+div.container div.title  h2{
+    color: var(--principal-color);
+    
+    font-size: 2.4rem;
+    font-weight: bold;
+}
+
+/* Botoes */
+div.botoes {
+    margin-left: auto;
+}
+
+div.botoes .button {
+    padding: 9px 20px;
+    
+    border-radius: 4px;
+
+}
+
+div.botoes .button.salvar {
+    background-color: var(--purple);
+    cursor: pointer;
+}
+
+div.botoes .button.delete {
+    background-color: var(--red);
+    margin-right: 10px;
+}
+
+div.botoes button[type="submit"],
+div.botoes a.button.salvar {
+    color: white;
+    
+    font-weight: bold;
+    font-size: 1.6rem;
+
+}
+
+/* Label */
+div.container label {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.6rem;
+
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+div.container label:first-of-type {
+    margin-top: initial;
+}
+
+/* Inputs */
+div.container form input[type="text"],
+div.container form select,
+div.container form textarea {
+    width: 100%;
+    background-color: white;
+
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+
+    padding: 15px 20px;
+
+    resize: none;
+}
+
+/* Button Adicionar */
+div.card-chef__info a.visualizar,
+div.container button.adicionar-ingrediente,
+div.container button.adicionar-passo {
+    display: block;
+
+    margin-top: 15px;
+
+    font-weight: bold;
+    font-size: 1.6rem;
+
+    color: var(--purple);
+    
+    background-color: initial;
+
+    cursor: pointer;
+}
+
+
+div.botoes.edit {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+/* Visualizar Chefs */
+div.card-chef__info a.visualizar {
+    margin-top: 10px;
+
+    font-size: 1.4rem;
+}

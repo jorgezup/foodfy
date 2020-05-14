@@ -1,0 +1,61 @@
+{% extends "admin/layout-admin.njk" %}
+
+{% block content %}
+
+	<div class="container">
+		<div class="title flex">
+			<h2>Editando receita</h2>
+		</div>
+		<form action="/admin/recipes?_method=PUT" method="POST">
+			<input type="hidden" name="id" value="{{recipe.id}}">
+
+			<label>Imagem da receita</label>
+			<input type="text" name="image" value={{recipe.image}}>
+
+			<label>Chef</label>
+			<select name="chef">
+				{% for chef in chefs %}
+					{% if recipe.chef_id == chef.id %}
+						<option value="{{chef.name}}">{{chef.name}}</option>
+					{% endif %}
+				{% endfor %}
+			</select>
+
+			<label>Ingredientes</label>
+			<div id="ingredientes">
+				<div class="ingrediente">
+					{% for ingredient in recipe.ingredients %}
+						<input type="text" name="ingredients[]" value="{{ingredient}}" >
+					{% endfor %}
+				</div>
+			</div>
+			<button type="button" class="adicionar-ingrediente">Adicionar novo ingrediente</button>
+
+			<label>Modo de preparo</label>
+			<div id="passos">
+				{% for prepar in recipe.preparation %}
+					<div class="passo">
+						<input type="text" name="preparation[]" value="{{prepar}}">
+					</div>
+				{% endfor %}
+			</div>
+			<button type="button" class="adicionar-passo">Adicionar passo</button>
+
+			<label>Informações Adicionais</label>
+			<textarea name="information" cols="30" rows="10" >{{recipe.information}}</textarea>
+
+			<div class="botoes edit">
+				<button type="submit" class="button salvar">Salvar receita</button>
+				<div>{{recipe.id}}</div>
+				</form>
+				<form action="/admin/recipes?_method=DELETE" method="POST">
+					<input type="hidden" name="id" value="{{recipe.id}}">
+					<button type="submit" class="button delete">Deletar</button>
+				</form>
+			</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script src="/scripts-ingrediente.js"></script>
+{% endblock %}

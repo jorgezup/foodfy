@@ -51,3 +51,17 @@ const pagination = document.querySelector(".pagination")
 if (pagination) {
     createPagination(pagination)
 }
+
+console.log
+
+const currentPage = location.pathname
+const menuItems = document.querySelectorAll("header ul li a")
+
+
+/* Adiciona a classe active conforme a página que está */
+for (let item of menuItems) {
+    console.log(item)
+    if (currentPage.includes(item.getAttribute("href"))) {
+        item.classList.add("active")
+    }
+}

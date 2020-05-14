@@ -1,0 +1,45 @@
+section.cards-chef {
+    margin-top: 50px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px;
+}
+
+section.cards-chef div.card-chef {
+    display: flex;
+    align-items: center;
+}
+
+section.cards-chef div.card-chef div.card-chef__image-content{
+    max-width: 64px;
+
+    width: 100%;
+    height: 64px;
+
+}
+section.cards-chef div.card-chef div.card-chef__image-content img{
+    border-radius: 50%;
+    width: 100%;
+}
+
+section.cards-chef div.card-chef div.card-chef__info {
+    margin-left: 20px;
+}
+
+section.cards-chef div.card-chef div.card-chef__info p{
+    color: var(--principal-color); /* principal-color */
+    
+    font-size: 1.8rem;
+    line-height: 2.1rem;
+
+    /* margin-bottom: 5px; */
+}
+
+section.cards-chef div.card-chef div.card-chef__info p + p{
+    color: #777777;
+
+    font-size: 1.4rem;
+
+    margin-top: 5px;
+}

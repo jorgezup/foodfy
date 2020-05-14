@@ -1,23 +1,29 @@
 {% extends "layout.njk" %}
 
+
 {% block content %}
 
+    <div class="container">
         <section>
             <div class="container-slogan">
                 <h2>As melhores receitas</h2>
-                <p>
+                <div>
+                    <p>
                     Aprenda a construir os melhores pratos com receitas criadas por profissionais do mundo inteiro
                 </p>
+                </div>
                 <div>
                     <img src="assets/chef.png" alt="imagem do chef">
                 </div>
             </div>
         </section>
 
-        <h3 class="sub-destaque">Mais acessadas</h3>
+        <div class="receitas">
+            <h3>Mais acessadas</h3>
+        </div>
 
         <section class="cards">
-            {%for receita in receitas%}
+            {# {%for receita in receitas%}
                 <div class="card">
                     <div class="card__image-content">
                         <!-- inserir a imagem -->
@@ -29,11 +35,83 @@
                         <small>{{receita.author}}</small>
                     </div>
                 </div>
-                {%endfor%}
-            </section>
+                {%endfor%} #}
+            <div class="card">
+                <div class="card__image-content">
+                    <!-- inserir a imagem -->
+                    <img src='https://placehold.co/300x140' alt="">
+                </div>
+                <div class="card__info">
+                    <!-- inserir nome da comida -->
+                    <p>Triplo Bacon Burguer</p>
+                    <p>Jorge Relato</p>
+                </div>
+            </div>
 
-    {% endblock %}
+            <div class="card">
+                <div class="card__image-content">
+                    <!-- inserir a imagem -->
+                    <img src='https://placehold.co/300x140' alt="">
+                </div>
+                <div class="card__info">
+                    <!-- inserir nome da comida -->
+                    <p>Triplo Bacon Burguer</p>
+                    <p>Jorge Relato</p>
+                </div>
+            </div>
 
-    {% block script %}
-    <script src="/scripts-cards.js"></script>
-    {% endblock %}
+            <div class="card">
+                <div class="card__image-content">
+                    <!-- inserir a imagem -->
+                    <img src='https://placehold.co/300x140' alt="">
+                </div>
+                <div class="card__info">
+                    <!-- inserir nome da comida -->
+                    <p>Triplo Bacon Burguer</p>
+                    <p>Jorge Relato</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card__image-content">
+                    <!-- inserir a imagem -->
+                    <img src='https://placehold.co/300x140' alt="">
+                </div>
+                <div class="card__info">
+                    <!-- inserir nome da comida -->
+                    <p>Triplo Bacon Burguer</p>
+                    <p>Jorge Relato</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card__image-content">
+                    <!-- inserir a imagem -->
+                    <img src='https://placehold.co/300x140' alt="">
+                </div>
+                <div class="card__info">
+                    <!-- inserir nome da comida -->
+                    <p>Triplo Bacon Burguer</p>
+                    <p>Jorge Relato</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card__image-content">
+                    <!-- inserir a imagem -->
+                    <img src='https://placehold.co/300x140' alt="">
+                </div>
+                <div class="card__info">
+                    <!-- inserir nome da comida -->
+                    <p>Triplo Bacon Burguer</p>
+                    <p>Jorge Relato</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
+
+{# {% block script %}
+        <script src="/scripts-cards.js"></script>
+    {% endblock %} #}

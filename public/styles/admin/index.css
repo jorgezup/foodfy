@@ -1,0 +1,47 @@
+div.container div.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    margin-top: 30px;
+}
+
+div.grid div.container-receita {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+div.grid div.container-receita img{
+    width: 100%;
+    max-width: 172px;
+    height: 80px;
+    
+    border-radius: 8px;
+
+    margin-right: 20px;
+
+    object-fit: cover;
+}
+
+div.grid div.container-receita div.informacoes-receita p:nth-child(1){
+    font-size: 1.8rem;
+    color: var(--principal-color);
+
+    line-height: 2.1rem;
+}
+
+div.grid div.container-receita div.informacoes-receita p:nth-child(2){
+    font-size: 1.4rem;
+    color: #777777;
+
+    margin-top: 5px;
+}
+div.grid div.container-receita div.informacoes-receita a{
+    font-size: 1.4rem;
+    font-weight: bold;
+
+    color: var(--purple);
+
+    margin-top: 10px;
+}
+

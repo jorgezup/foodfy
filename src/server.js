@@ -7,7 +7,7 @@ const server = express()
 
 server.use(express.urlencoded({ extended: true }))
 /* Public */
-server.use(express.static(__dirname + '/public'))
+server.use(express.static('public'))
 /* Rotas */
 server.use(methodOverride('_method'))
 server.use(routes)

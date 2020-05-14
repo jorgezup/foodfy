@@ -1,0 +1,87 @@
+div.container div.chef-detalhes {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+
+}
+
+div.container div.chef-detalhes img {
+    max-width: 200px;
+    height: 200px;
+
+    width: 100%;
+
+    border-radius: 50%;
+}
+
+div.chef-detalhes > p:first-of-type{
+    font-size: 3.6rem;
+    font-weight: bold;
+    
+    color: var(--principal-color);
+
+    margin-top: 30px;
+}
+
+div.chef-detalhes > p{
+    font-size: 2rem;
+    color: #777777;
+    
+}
+
+h2#chefs-show {
+    font-size: 2.4rem;
+    font-weight: bold;
+
+    margin-top: 50px;
+}
+
+div.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+   margin-top: 30px;
+
+}
+
+div.grid div.container-receita {
+    display:  flex;
+    flex-direction: row;
+}
+
+div.grid div.container-receita img {
+    width: 100%;
+    max-width: 172px;
+    height: 80px;
+
+    border-radius: 8px;
+
+    object-fit: cover;
+}
+
+div.grid div.container-receita div.informacoes-receita{
+    margin-left: 20px;
+}
+
+div.grid div.container-receita div.informacoes-receita > p:first-of-type{
+    font-size: 1.8rem;
+
+    margin-bottom: 5px;
+}
+
+
+div.grid div.container-receita div.informacoes-receita > p:nth-child(2){
+    font-size: 1.4rem;
+    color: #777777;
+
+    margin-bottom: 10px;
+}
+
+div.grid div.container-receita div.informacoes-receita > a.visualizar{
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: var(--purple);
+}
