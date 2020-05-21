@@ -2,40 +2,19 @@
 
 {% block content %}
 
-	<h2>Criando receita</h2>
-	<form action="/admin/receitas" method="POST">
-		<label>ID do Chef</label>
-		<input type="number" name="chef_id">
-
-		<label>Imagem da receita</label>
-		<input type="text" name="image">
-
-		<label>Título da Receita</label>
-		<input type="text" name="title">
-
-		<label>Ingredientes</label>
-		<div id="ingredientes">
-			<div class="ingrediente">
-				<input type="text" name="ingredients[]" value="" >
-			</div>
+	<div class="container">
+		<div class="title">
+			<h2>Criando receita</h2>
 		</div>
-		<button type="button" class="adicionar-ingrediente">Adicionar novo ingrediente</button>
+		<form action="/admin/recipes" method="POST" enctype="multipart/form-data">
 
-		<label>Modo de preparo</label>
-		<div id="passos">
-			<div class="passo">
-				<input type="text" name="preparation[]" value="">
-			</div>
+			{% include "./fields.njk" %}
+
+			<div class="botoes edit">
+				<button type="submit" class="button salvar">Salvar receita</button>
+			</form>
 		</div>
-		<button type="button" class="adicionar-passo">Adicionar passo</button>
-		
-		<label>Informações Adicionais</label>
-		<textarea name="information" cols="30" rows="10"></textarea>
-		
-		<div class="botoes">
-			<button type="submit" class="salvar">Salvar receita</button>
-		</div>
-	</form>
+	</div>
 {% endblock %}
 
 {% block script %}

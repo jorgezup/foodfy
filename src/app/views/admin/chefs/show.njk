@@ -15,7 +15,9 @@
     </div>
 
     <div class="chef-detalhes">
-        <img src="{{chef.avatar_url}}" alt="Imagem do Chef {{chef.name}}">
+    {% for image in files %}
+        <img src="{{image.src}}" alt="Imagem do Chef {{chef.name}}">
+    {% endfor %}
 
         <p>{{chef.name}}</p>
         <p>{{qntdRecipes}} receitas</p>

@@ -8,34 +8,22 @@
 
     <div class="container">
 
+        <div class="title">
+            <h2>Gerenciar chefs</h2>
+        </div>
+
         <section class="cards-chef">
-            {# {%for receita in receitas%}
-                <div class="card">
-                    <div class="card__image-content">
-                        <!-- inserir a imagem -->
-                        <img src="{{receita.image}}" alt="">
+            {% for chef in chefs %}
+                <div class="card-chef">
+                    <div class="card-chef__image-content">
+                        <img src="{{chef.img}}" alt="Imagem do chef {{chef.name}}">
                     </div>
-                    <div class="card__info">
-                        <!-- inserir nome da comida -->
-                        <p>{{receita.title}}</p>
-                        <small>{{receita.author}}</small>
+                    <div class="card-chef__info">
+                        <p>{{chef.name}}</p>
+                        <a href="/admin/chefs/{{chef.id}}" class="visualizar">Visualizar</a>
                     </div>
                 </div>
-                {%endfor%} #}
-                {% for chef in chefs %}
-                    
-            <div class="card-chef">
-                <div class="card-chef__image-content">
-                    <!-- inserir a imagem -->
-                    <img src="{{chef.avatar_url}}" alt="">
-                </div>
-                <div class="card-chef__info">
-                    <!-- inserir nome da comida -->
-                    <p>{{chef.name}}</p>
-                    <a href="/admin/chefs/{{chef.id}}" class="visualizar">Visualizar</a>
-                </div>
-            </div>
-                {% endfor %}
+            {% endfor %}
 
         </div>
 

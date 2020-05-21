@@ -1,0 +1,55 @@
+{% extends "admin/layout-admin.njk" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="title">
+            <h2>Criando Chef</h2>
+        </div>
+
+        <form action="/admin/chefs" method="POST" enctype="multipart/form-data">
+            <label>Nome</label>
+            <input type="text" name="name">
+
+            {# <label>Avatar</label>
+            <input type="text" name="avatar_url"> #}
+
+            <label>Avatar</label>
+            <div id="photos-upload">
+                <i class="material-icons">
+                add
+                </i>
+                <input 
+                    id="photos-input" 
+                    type="file" 
+                    name="photos" 
+                    multiple
+                    accept="images/*"
+                    onchange="PhotosUpload.handleFileInput(event)"
+                >
+            </div>
+            {% if files %}
+                <div id="photos-preview">
+                    {% for image in files %}
+                        <div class="photo" id="{{image.id}}">
+                            <img src="{{image.src}}" alt="{{image.name}}">
+                            <i class="material-icons"
+                                onclick="PhotosUpload.removeOldPhoto(event)"
+                            >
+                             delete_forever</i>
+                        </div>
+                    {% endfor %}
+                    <input type="hidden" name="removed_files">
+                </div>
+            {% endif %}
+
+            <div class="botoes edit">
+                <button type="submit" class="button salvar">Salvar chef</button>
+            </form>
+        </div>
+
+    {% endblock %}
+
+    {% block script %}
+        <script src="/scripts-chef.js"></script>
+    {% endblock %}

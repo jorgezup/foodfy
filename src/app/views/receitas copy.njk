@@ -3,8 +3,6 @@
 {% block content %}
 
     <section class="cards">
-    {% for recipe in recipes %}
-        
         <div class="card">
             <div class="card__image-content">
                 <!-- inserir a imagem -->
@@ -15,7 +13,6 @@
                 <p class="nome-receita">{{recipe.title}}</p>
                 <p>{{chef.name}}</p>
             </div>
-    {% endfor %}
 
             <h3 class="sub-destaque">Ingredientes</h3>
 

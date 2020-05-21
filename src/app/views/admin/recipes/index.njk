@@ -5,47 +5,32 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
+    <div class="container">
 
-    <div class="title">
-        <h2>Gerenciar receitas</h2>
+        <div class="title">
+            <h2>Gerenciar receitas</h2>
+        </div>
 
-        {# <div class="botoes">
-            <form action="admin/recipes/receitas" method="GET">
-                <input 
-                    type="text" 
-                    name="filter"
-                    placeholder="Filtrar por nome ou aula"
-                    value = {{filter}}
-                >
-                <button type="submit">Filtrar</button>
-            </form>
-            <button class="button salvar">
-                <a  href="admin/recipes/receitas/create">Nova Receita</a>
-            </button>
-        </div> #}
-    </div>
-
-    <div class="grid">
-        {% for receita in receitas %}
-            <div class="container-receita">
-                <img src={{receita.image}} alt="Imagem Receita">
-                <div class="informacoes-receita">
-                    <p>{{receita.title}}</p>
-                    <p>{{chef.name}}</p>
-                    <a href="/admin/recipes/{{receita.id}}">Visualizar</a>
+        <div class="grid">
+                {% for receita in receitas %}
+                <div class="container-receita">
+                    <img src="{{receita.img}}" alt="Imagem Receita {{receita.title}}">
+                    <div class="informacoes-receita">
+                        <p>{{receita.title}}</p>
+                        <p>{{chef.name}}</p>
+                        <a href="/admin/recipes/{{receita.id}}">Visualizar</a>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
+
+        <div class="pagination"
+            data-page = {{pagination.page}}
+            data-total = {{pagination.total}}
+            data-filter = {{filter}}
+        ></div>
+
     </div>
-
-    <div class="pagination"
-        data-page = {{pagination.page}}
-        data-total = {{pagination.total}}
-        data-filter = {{filter}}
-    ></div>
-
-</div>
 {% endblock %}
 
 {% block script %}

@@ -1,12 +1,11 @@
 div.admin {
     background-color: var(--principal-color);
-    height: 80px;
 }
 
 div.admin header.container ul {
     display: flex;
 
-    margin-top: 27px;
+    height: 80px;
 }
 
 div.admin header.container ul li{
@@ -35,9 +34,10 @@ div.admin header li a {
 
 /*  H2 da página e botões */
 div.container div.title {
-    margin: 55px 0 24px 0;
-
+    margin: 50px 0 24px 0;
+    height: 50px;
     display: flex;
+    align-items: center;
 }
 
 div.container div.title  h2{
@@ -45,6 +45,8 @@ div.container div.title  h2{
     
     font-size: 2.4rem;
     font-weight: bold;
+
+    display: inline-block;
 }
 
 /* Botoes */
@@ -133,6 +135,7 @@ div.botoes.edit {
 
     display: flex;
     flex-direction: row-reverse;
+    margin-top: 7px;
 }
 
 /* Visualizar Chefs */
@@ -141,3 +144,91 @@ div.card-chef__info a.visualizar {
 
     font-size: 1.4rem;
 }
+
+/* Photos UPLOAD */
+div.container form div#photos-upload {
+    position: relative;
+    overflow: hidden;
+    
+    width: 149px;
+    height: 149px;
+    
+    background-color: #FFFFFF;
+    
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+
+div.container form div#photos-upload i {
+    color: #777777;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.container form #photos-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: block;
+    overflow: hidden;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+
+    cursor: pointer;
+}
+
+div.container form div#photos-preview {
+    display: grid;
+    grid-template-columns:  repeat(3, 1fr);
+    gap: 8px;
+
+    width: 100%;
+    margin: 8px 0;
+}
+
+div.container form div#photos-preview img{
+    width: 100%;
+    height: 150px;
+
+    object-fit: contain;
+}
+
+#photos-preview .photo{
+    position: relative;
+}
+
+#photos-preview .photo i{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #777777;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 500%;
+    cursor: pointer;
+
+    transition: opacity 200ms;
+    
+    opacity: 0;
+}
+#photos-preview .photo:hover i{
+    opacity: 1;
+}
+

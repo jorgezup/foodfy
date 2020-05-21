@@ -5,5 +5,10 @@ const Base = require('./Base')
 Base.init({ table: 'recipes' })
 
 module.exports = {
-    ...Base
+    ...Base,
+    recipeFiles(id) {
+        return db.query(`
+            SELECT * FROM recipe_files WHERE recipe_id = $1
+        `, [id])
+    }, 
 }

@@ -1,38 +1,7 @@
-function adicionarIngrediente() {
-    const ingredientes = document.querySelector('#ingredientes')
-    const campoContainer = document.querySelectorAll('.ingrediente')
-
-    const novoCampo = campoContainer[campoContainer.length - 1].cloneNode(true)
-
-    if (novoCampo.children[0].value == "") return false
-
-    novoCampo.children[0].value = ""
-    ingredientes.appendChild(novoCampo)
-}
-
-function adicionarPasso() {
-    const passos = document.querySelector('#passos')
-    const campoContainer = document.querySelectorAll('.passo')
-
-    const novoCampo = campoContainer[campoContainer.length - 1].cloneNode(true)
-
-    if (novoCampo.children[0].value == "") return false
-
-    novoCampo.children[0].value = ""
-    passos.appendChild(novoCampo)
-}
-
-const ingrediente = document.querySelector('.adicionar-ingrediente')
-ingrediente.addEventListener('click', adicionarIngrediente)
-
-const passo = document.querySelector('.adicionar-passo')
-passo.addEventListener('click', adicionarPasso)
-
-
 const PhotosUpload = {
     input: "",
     preview: document.querySelector('#photos-preview'),
-    uploadLimit: 5,
+    uploadLimit: 1,
     files: [],
     handleFileInput(event) {
         const { files: fileList } = event.target
@@ -65,7 +34,7 @@ const PhotosUpload = {
         const { files: fileList } = input
 
         if (fileList.length > uploadLimit) {
-            alert(`Envie no máximo ${uploadLimit} images`)
+            alert(`Envie somente ${uploadLimit} imagem`)
             event.preventDefault()
             return true
         }
@@ -79,7 +48,7 @@ const PhotosUpload = {
 
         const totalPhotos = fileList.length + photosDiv.length
         if (totalPhotos > uploadLimit) {
-            alert('Você atingiu o limite máximo de imagens')
+            alert(`Só é permitido ${uploadLimit} imagem.`)
             event.preventDefault()
             return true
         }
@@ -133,6 +102,12 @@ const PhotosUpload = {
         }
 
         photoDiv.remove()
+    },
+    checkAvatar(event) {
+        const avatarChef = document.querySelector('#photos-preview img')
+        if (!avatarChef){
+            alert('Favor inserir uma imagem!')
+            event.preventDefault()
+        }
     }
 }
-

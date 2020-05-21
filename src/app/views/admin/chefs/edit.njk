@@ -8,22 +8,55 @@
         <h2>Editando Chef</h2>
     </div>
 
-    <form action="/admin/chefs?_method=PUT" method="POST">
+    <form action="/admin/chefs?_method=PUT" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="id" value="{{chef.id}}">
 
         <label>Nome</label>
         <input type="text" name="name" value="{{chef.name}}">
 
+        {# <label>Avatar</label>
+        <input type="text" name="avatar_url" value="{{chef.avatar_url}}"> #}
+
         <label>Avatar</label>
-        <input type="text" name="avatar_url" value="{{chef.avatar_url}}">
-            <button type="submit" class="button salvar">Salvar chef</button>
-            </form>
+        <div id="photos-upload">
+            <i class="material-icons">
+            add
+            </i>
+            <input 
+                id="photos-input" 
+                type="file" 
+                name="photos" 
+                multiple
+                accept="images/*"
+                onchange="PhotosUpload.handleFileInput(event)"
+            >
+        </div>
+        <div id="photos-preview">
+            {% if files %}
+                {% for image in files %}
+                    <div class="photo" id="{{image.id}}">
+                        <img src="{{image.src}}" alt="{{image.name}}">
+                        <i class="material-icons"
+                            onclick="PhotosUpload.removeOldPhoto(event)"
+                        >       
+                        delete_forever</i>
+                    </div>
+                {% endfor %}
+                <input type="hidden" name="removed_files">
+            {% endif %}
+        </div>
     
         <div class="botoes edit">
+            <button type="submit" class="button salvar" onclick="PhotosUpload.checkAvatar(event)">Salvar chef</button>
+            </form>
             <form action="/admin/chefs?_method=DELETE" method="POST">
                 <input type="hidden" name="id" value="{{chef.id}}">
                 <button type="submit" class="button delete">Deletar</button>
             </form>
         </div>
 </div>
+{% endblock %}
+
+{% block script %}
+    <script src="/scripts-chef.js"></script>
 {% endblock %}

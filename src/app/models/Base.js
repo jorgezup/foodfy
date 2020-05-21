@@ -105,6 +105,11 @@ const Base = {
     },
     delete(id) {
         return db.query(`DELETE FROM ${this.table} WHERE id =${id}`)
+    },
+    files(id) {
+        return db.query(`
+            SELECT * FROM files WHERE id = $1
+        `, [id])
     }
 
 }

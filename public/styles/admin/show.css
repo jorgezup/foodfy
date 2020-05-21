@@ -1,11 +1,112 @@
-div.container img {
+/* Gallery */
+.gallery {
     width: 100%;
-    height: 280px;
-
-    border-radius: 15px;
-
-    object-fit: cover;
 }
+
+.gallery img {
+    width: 100%;
+}
+
+.gallery .highlight > img {
+    width: 100%;
+    max-height: 280px;
+    
+    border-radius: 15px;
+    object-position: 50% 50%;
+    
+    object-fit: cover;
+
+    cursor: zoom-in;
+}
+
+.gallery-preview {
+    display: flex;
+}
+
+.gallery-preview > div{
+    margin-left: auto;
+}
+
+.gallery-preview img {
+    height: 50px;
+    width: 50px;
+
+    border: 1px solid #DDDDDD;
+    border-radius: 4px;
+    
+    object-fit: cover;
+    
+    opacity: 0.6;
+    
+    cursor: pointer;
+
+    margin-left: 2px;
+
+    transition: 200ms;
+}
+
+.gallery-preview img:hover,
+.gallery-preview img.active {
+    opacity: 1;
+}
+
+/* LightBox */
+.highlight .lightbox-target {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+
+    overflow: hidden;
+    z-index: 100;
+
+    top: -100%;
+    left: 0;
+
+    opacity: 0;
+    transition: opacity 200ms;
+}
+
+.highlight .lightbox-target img{
+    margin: auto;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    background-color: white;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+
+    width: 90%;
+    height: 90%;
+
+    object-fit: contain;
+
+}
+
+.lightbox-target a.lightbox-close {
+    width: 50px;
+    height: 50px;
+
+    background-color: white;
+
+    position: absolute;
+    top: -80px;
+    right: 0px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 200ms;
+}
+
+.lightbox-target a.lightbox-close i {
+    /* margin-left: auto; */
+}
+
 
 div.container div.receita-detalhes > p:first-child {
     font-weight: bold;
@@ -39,3 +140,7 @@ div.container div.receita-detalhes div.conteudo > p.destaque + p{
 
     margin-top: 19px;
 }
+
+
+
+

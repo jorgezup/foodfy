@@ -1,6 +1,5 @@
 {% extends "layout.njk" %}
 
-
 {% block content %}
 
     <div class="container">
@@ -23,93 +22,22 @@
         </div>
 
         <section class="cards">
-            {# {%for receita in receitas%}
+            {% for recipe in recipes %}
+
                 <div class="card">
                     <div class="card__image-content">
                         <!-- inserir a imagem -->
-                        <img src="{{receita.image}}" alt="">
+                        <img src='{{recipe.image}}' alt="">
                     </div>
                     <div class="card__info">
                         <!-- inserir nome da comida -->
-                        <p>{{receita.title}}</p>
-                        <small>{{receita.author}}</small>
+                        <p>{{recipe.title}}</p>
+                        <p>{{chef.name}}</p>
                     </div>
                 </div>
-                {%endfor%} #}
-            <div class="card">
-                <div class="card__image-content">
-                    <!-- inserir a imagem -->
-                    <img src='https://placehold.co/300x140' alt="">
-                </div>
-                <div class="card__info">
-                    <!-- inserir nome da comida -->
-                    <p>Triplo Bacon Burguer</p>
-                    <p>Jorge Relato</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card__image-content">
-                    <!-- inserir a imagem -->
-                    <img src='https://placehold.co/300x140' alt="">
-                </div>
-                <div class="card__info">
-                    <!-- inserir nome da comida -->
-                    <p>Triplo Bacon Burguer</p>
-                    <p>Jorge Relato</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card__image-content">
-                    <!-- inserir a imagem -->
-                    <img src='https://placehold.co/300x140' alt="">
-                </div>
-                <div class="card__info">
-                    <!-- inserir nome da comida -->
-                    <p>Triplo Bacon Burguer</p>
-                    <p>Jorge Relato</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card__image-content">
-                    <!-- inserir a imagem -->
-                    <img src='https://placehold.co/300x140' alt="">
-                </div>
-                <div class="card__info">
-                    <!-- inserir nome da comida -->
-                    <p>Triplo Bacon Burguer</p>
-                    <p>Jorge Relato</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card__image-content">
-                    <!-- inserir a imagem -->
-                    <img src='https://placehold.co/300x140' alt="">
-                </div>
-                <div class="card__info">
-                    <!-- inserir nome da comida -->
-                    <p>Triplo Bacon Burguer</p>
-                    <p>Jorge Relato</p>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card__image-content">
-                    <!-- inserir a imagem -->
-                    <img src='https://placehold.co/300x140' alt="">
-                </div>
-                <div class="card__info">
-                    <!-- inserir nome da comida -->
-                    <p>Triplo Bacon Burguer</p>
-                    <p>Jorge Relato</p>
-                </div>
-            </div>
+            {% endfor %}
         </section>
     </div>
-
 {% endblock %}
 
 {# {% block script %}
