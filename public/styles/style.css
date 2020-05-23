@@ -20,7 +20,7 @@ header ul li:first-child {
     margin-right: 122px;
 }
 
-header ul li:nth-child(2) {
+header ul li {
     margin-right: 30px;
 }
 
@@ -32,6 +32,7 @@ header ul li a {
 }
 
 header ul li:last-of-type {
+    margin-right: initial;
     margin-left: auto;
 }
 
@@ -76,6 +77,7 @@ footer {
     height: 62px;
 
     background-color: #eeeeee;
+
 }
 
 footer p {

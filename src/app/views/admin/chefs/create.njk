@@ -11,9 +11,6 @@
             <label>Nome</label>
             <input type="text" name="name">
 
-            {# <label>Avatar</label>
-            <input type="text" name="avatar_url"> #}
-
             <label>Avatar</label>
             <div id="photos-upload">
                 <i class="material-icons">
@@ -28,8 +25,8 @@
                     onchange="PhotosUpload.handleFileInput(event)"
                 >
             </div>
-            {% if files %}
                 <div id="photos-preview">
+            {% if files %}
                     {% for image in files %}
                         <div class="photo" id="{{image.id}}">
                             <img src="{{image.src}}" alt="{{image.name}}">
@@ -40,8 +37,8 @@
                         </div>
                     {% endfor %}
                     <input type="hidden" name="removed_files">
-                </div>
             {% endif %}
+                </div>
 
             <div class="botoes edit">
                 <button type="submit" class="button salvar">Salvar chef</button>

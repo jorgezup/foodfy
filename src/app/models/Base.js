@@ -2,18 +2,20 @@ const db = require('../../config/db')
 
 function find(filters, table) {
     let query = `SELECT * FROM ${table}`
-
     if (filters) {
         Object.keys(filters).map(key => {
             //WHERE | OR | AND
+            if (key == 'ORDER BY') {
+                query = `${query} ORDER BY ${Object.values(filters)} DESC`
+            }
+            else {
             query = `${query} ${key}`
-
-            Object.keys(filters[key]).map(field => {
-                query = `${query} ${field} = '${filters[key][field]}'`
-            })
+                Object.keys(filters[key]).map(field => {
+                    query = `${query} ${field} = '${filters[key][field]}'`
+                })
+            }
         })
     }
-
     return db.query(query)
 }
 
@@ -79,7 +81,6 @@ const Base = {
     update(id, fields) {
         try {
             let update = []
-            console.log(fields)
 
             Object.keys(fields).map(key => {
                 let line = ""

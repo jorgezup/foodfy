@@ -87,7 +87,7 @@ div.container label {
     font-size: 1.6rem;
 
     margin-bottom: 10px;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 div.container label:first-of-type {
@@ -105,14 +105,14 @@ div.container form textarea {
     border-radius: 4px;
 
     padding: 15px 20px;
+    margin-bottom: 10px;
 
     resize: none;
 }
 
 /* Button Adicionar */
 div.card-chef__info a.visualizar,
-div.container button.adicionar-ingrediente,
-div.container button.adicionar-passo {
+div.container button.adicionar-item {
     display: block;
 
     margin-top: 15px;
@@ -195,10 +195,11 @@ div.container form div#photos-preview {
     margin: 8px 0;
 }
 
+
 div.container form div#photos-preview img{
     width: 100%;
     height: 150px;
-
+    
     object-fit: contain;
 }
 
@@ -216,14 +217,14 @@ div.container form div#photos-preview img{
 
     width: 100%;
     height: 100%;
-
+    
     display: flex;
     align-items: center;
     justify-content: center;
-
+    
     font-size: 500%;
     cursor: pointer;
-
+    
     transition: opacity 200ms;
     
     opacity: 0;
@@ -231,4 +232,3 @@ div.container form div#photos-preview img{
 #photos-preview .photo:hover i{
     opacity: 1;
 }
-

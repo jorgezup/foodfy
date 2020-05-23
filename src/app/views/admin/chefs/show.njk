@@ -15,23 +15,21 @@
     </div>
 
     <div class="chef-detalhes">
-    {% for image in files %}
-        <img src="{{image.src}}" alt="Imagem do Chef {{chef.name}}">
-    {% endfor %}
+        <img src="{{chef.img}}" alt="Imagem do Chef {{chef.name}}">
 
         <p>{{chef.name}}</p>
-        <p>{{qntdRecipes}} receitas</p>
+        <p>{{recipes.length}} receitas</p>
     </div>
 
     <h2 id="chefs-show">Receitas</h2>
       <div class="grid">
-        {% for receita in receitas %}
+        {% for recipe in recipes %}
             <div class="container-receita">
-                <img src={{receita.image}} alt="Imagem Receita">
+                <img src="{{recipe.img}}" alt="Imagem Receita ">
                 <div class="informacoes-receita">
-                    <p>{{receita.title}}</p>
+                    <p>{{recipe.title}}</p>
                     <p>{{chef.name}}</p>
-                    <a class="visualizar" href="/admin/recipes/{{receita.id}}">Visualizar</a>
+                    <a class="visualizar" href="/admin/recipes/{{recipe.id}}">Visualizar</a>
                 </div>
             </div>
         {% endfor %}

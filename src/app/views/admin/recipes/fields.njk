@@ -37,14 +37,14 @@
     {% for chef in chefs %}
         {% if recipe.chef_id == chef.id %}
             <option value="{{chef.id}}" selected>{{chef.name}}</option>
+        {% else  %}
+            <option value="{{chef.id}}">{{chef.name}}</option>
         {% endif %}
-        <option value="{{chef.id}}">{{chef.name}}</option>
     {% endfor %}
 </select>
 
 <label>Ingredientes</label>
-<div id="ingredientes">
-    <div class="ingrediente">
+    <div id="ingredientes">
         {% if not recipe %}
             <input type="text" name="ingredients[]" value="{{ingredient}}" >
         {% endif %}
@@ -52,12 +52,10 @@
             <input type="text" name="ingredients[]" value="{{ingredient}}" >
         {% endfor %}
     </div>
-</div>
-<button type="button" class="adicionar-ingrediente">Adicionar novo ingrediente</button>
+<button type="button" class="adicionar-item" onclick="addIngrediente()">Adicionar novo ingrediente</button>
 
 <label>Modo de preparo</label>
-<div id="passos">
-    <div class="passo">
+    <div id="passo">
         {% if not recipe %}
             <input type="text" name="preparation[]" value="{{prepar}}">
         {% endif %}
@@ -65,8 +63,7 @@
             <input type="text" name="preparation[]" value="{{prepar}}">
         {% endfor %}
     </div>
-</div>
-<button type="button" class="adicionar-passo">Adicionar passo</button>
+<button type="button" class="adicionar-item" onclick="addPasso()">Adicionar passo</button>
 
 <label>Informações Adicionais</label>
 <textarea name="information" cols="30" rows="10" >{{recipe.information}}</textarea>

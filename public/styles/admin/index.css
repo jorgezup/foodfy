@@ -35,13 +35,12 @@ div.grid div.container-receita div.informacoes-receita p:nth-child(2){
     color: #777777;
 
     margin-top: 5px;
+    margin-bottom: 10px;
 }
 div.grid div.container-receita div.informacoes-receita a{
     font-size: 1.4rem;
     font-weight: bold;
 
     color: var(--purple);
-
-    margin-top: 10px;
 }
 

@@ -1,5 +1,5 @@
 const Chef = require('../models/Chef')
-const Recipes = require('../models/Recipe')
+const Recipe = require('../models/Recipe')
 const File = require('../models/File')
 
 
@@ -10,7 +10,6 @@ module.exports = {
             
             if (chefs == '') return res.send('Chefes não encontrados!')
 
-            let files = []
             for (let chef of chefs) {
                 /* Get Images */
                 let img = await Chef.files(chef.file_id)
@@ -57,7 +56,7 @@ module.exports = {
                 file_id: Object.values(file_id)
             })
 
-            return res.redirect(`/admin`)
+            return res.redirect(`/admin/chefs`)
 
         } catch (error) {
             console.error(error)
@@ -73,28 +72,32 @@ module.exports = {
            
             if (!chef) return res.send('Chefs não encontrados!')
 
-            /* Get Images */
-            const avatar_id = chef.file_id
-            let img = await Chef.files(avatar_id)
-            console.log(img)
-
-            let files = []
+            /* Get Chef Image */
+            let img = await Chef.files(chef.file_id)
             img.rows[0].path = `${req.protocol}://${req.headers.host}${img.rows[0].path.replace("public", "")}`
-            files.push({
-                id: img.rows[0].id,
-                src:img.rows[0].path,
-                name: img.rows[0].name
-            })
-           
-            const recipes = await Recipes.findAll({
+            chef['img'] = img.rows[0].path
+
+
+            /* Get All recipes by chef_id */
+            const recipes = await Recipe.findAll({
                 where: {
                     chef_id:id
                 }
             })
+            /* Get Images - Recipes*/
+            for (let recipe of recipes) {
+                const results = await Recipe.recipeFiles(recipe.id) /* return   { id: 5, recipe_id: 52, file_id: 10 } */
+                for (let i=0; i < 1; i++){ /* Pega só a primeira imagem de cada receita */
+                    let img = await Recipe.files(results.rows[i].file_id)
+                    img.rows[0].path = `${req.protocol}://${req.headers.host}${img.rows[0].path.replace("public", "")}`
+                    recipe['img'] = img.rows[0].path
+                    let chefName = await Chef.searchName(recipe.chef_id)
+                    recipe['chef_name'] = Object.values(chefName.rows[0])
+                }
+            }
 
-            const qntdRecipes = Object.keys(recipes).length
 
-            return res.render('admin/chefs/show', {chef, receitas: recipes, qntdRecipes, files})
+            return res.render('admin/chefs/show', {chef, recipes})
             
         } catch (error) {
             console.error(error)
@@ -103,14 +106,12 @@ module.exports = {
     async edit (req, res) {
         try {
             const chef = await Chef.findById(req.params.id)
-            console.log(chef)
 
             if (!chef) return res.send('Chef não encontrado!')
     
             /* Get Images */
             const avatar_id = chef.file_id
             let img = await Chef.files(avatar_id)
-            console.log(img)
 
             let files = []
             img.rows[0].path = `${req.protocol}://${req.headers.host}${img.rows[0].path.replace("public", "")}`
@@ -181,7 +182,10 @@ module.exports = {
             return res.send("Este chef não pode ser apagado pois ele possui receitas cadastradas.")
         }
 
+        const chef = await Chef.findById(req.body.id)
+    
         await Chef.delete(req.body.id)
+        await File.deleteChefAvatar(chef.file_id)
 
         return res.redirect(`/admin/chefs`)
     }

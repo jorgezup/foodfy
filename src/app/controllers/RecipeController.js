@@ -6,10 +6,9 @@ const RecipeFile = require('../models/RecipeFile')
 module.exports = {
     async index(req, res) {
         try {
-            let recipes = await Recipe.findAll()
+            let recipes = await Recipe.findAll({'ORDER BY':'updated_at'})
             
             if (recipes == "") return res.send('Receitas não encontradas!')
-
 
             /* Get Images */
             for (let recipe of recipes) {
@@ -18,6 +17,8 @@ module.exports = {
                     let img = await Recipe.files(results.rows[i].file_id)
                     img.rows[0].path = `${req.protocol}://${req.headers.host}${img.rows[0].path.replace("public", "")}`
                     recipe['img'] = img.rows[0].path
+                    let chefName = await Chef.searchName(recipe.chef_id)
+                    recipe['chef_name'] = Object.values(chefName.rows[0])
                 }
             }
             
@@ -41,8 +42,8 @@ module.exports = {
             const keys = Object.keys(req.body)
 
             for (key of keys) {
-                if (req.body[key] == "") {
-                    return res.send(`Preencha todos os campos! --> ${key}`)
+                if (req.body[key] == "" && key != "information" ) {
+                    return res.send(`Preencha todos os campos! `)
                 }
             }
 
@@ -140,14 +141,13 @@ module.exports = {
             const keys = Object.keys(req.body)            
 
             for (key of keys) {
-                if (req.body[key] == "" && key != "removed_files") {
+                if (req.body[key] == "" && key != "information" && key != "removed_files") {
                     return res.send("Preencha todos os campos!")
                 }
             }
 
             /* Inserindo novas Imagens */
             let filesId = []
-
             if (req.files.length != 0) {
                 const newFilesPromise = req.files.map(file =>File.create({...file}))
                 await Promise.all(newFilesPromise)
@@ -167,16 +167,26 @@ module.exports = {
                 const removedFiles = req.body.removed_files.split(",") //[1,2,3,]
                 const lastIndex = removedFiles.length - 1
                 removedFiles.splice(lastIndex, 1) //[1,2,3]
+                                
+                let removedFilesPromise = removedFiles.map(id => RecipeFile.delete(id))
+                await Promise.all(removedFilesPromise)
 
-                const removedFilesPromise = removedFiles.map(id => File.delete(id))
-
+                removedFilesPromise = removedFiles.map(id => File.delete(id))
                 await Promise.all(removedFilesPromise)
             }
 
-            const{ chef_id, image, title, ingredients, preparation, information } = req.body
+            let{ chef_id, title, ingredients, preparation, information } = req.body
+            
+            let lastIngredient = ingredients[ingredients.length - 1]
+            if (lastIngredient == '')
+                ingredients.pop()
+
+            let lastPreparation = preparation[preparation.length - 1]
+            if (lastPreparation == '')
+                preparation.pop()    
+
             await Recipe.update(req.body.id, {
                 chef_id,
-                image,
                 title,
                 ingredients,
                 preparation,
@@ -190,19 +200,16 @@ module.exports = {
         }
     },
     async delete(req, res) {
+        const recipeFiles = await RecipeFile.find(req.body.id) // [ { id: 15, recipe_id: 5, file_id: 20 }, ]
+        for (let i = 0; i < recipeFiles.rows.length; i++) {
+            let files = recipeFiles.rows[i]
+            let fileId = Number(Object.values(files))
+            await RecipeFile.delete(fileId)
+            await File.delete(fileId)
+        }
+
         await Recipe.delete(req.body.id)
 
         return res.redirect(`/admin/recipes`)
-    },
-    async homeIndex(req, res) {
-        let recipes = await Recipe.findAll()
-
-        let receitas = []
-
-        for (i = 0; i < 6; i++) {
-           receitas.push(Object(recipes[i]))
-        }
-
-        return res.render(`index`, {recipes:receitas})
     }
 }

@@ -1,32 +1,32 @@
-function adicionarIngrediente() {
-    const ingredientes = document.querySelector('#ingredientes')
-    const campoContainer = document.querySelectorAll('.ingrediente')
+// function adicionarIngrediente() {
+//     const ingredientes = document.querySelector('#ingredientes')
+//     const campoContainer = document.querySelectorAll('.ingrediente')
 
-    const novoCampo = campoContainer[campoContainer.length - 1].cloneNode(true)
+//     const novoCampo = campoContainer[campoContainer.length - 1].cloneNode(true)
 
-    if (novoCampo.children[0].value == "") return false
+//     if (novoCampo.children[0].value == "") return false
 
-    novoCampo.children[0].value = ""
-    ingredientes.appendChild(novoCampo)
-}
+//     novoCampo.children[0].value = ""
+//     ingredientes.appendChild(novoCampo)
+// }
 
-function adicionarPasso() {
-    const passos = document.querySelector('#passos')
-    const campoContainer = document.querySelectorAll('.passo')
+// function adicionarPasso() {
+//     const passos = document.querySelector('#passos')
+//     const campoContainer = document.querySelectorAll('.passo')
 
-    const novoCampo = campoContainer[campoContainer.length - 1].cloneNode(true)
+//     const novoCampo = campoContainer[campoContainer.length - 1].cloneNode(true)
 
-    if (novoCampo.children[0].value == "") return false
+//     if (novoCampo.children[0].value == "") return false
 
-    novoCampo.children[0].value = ""
-    passos.appendChild(novoCampo)
-}
+//     novoCampo.children[0].value = ""
+//     passos.appendChild(novoCampo)
+// }
 
-const ingrediente = document.querySelector('.adicionar-ingrediente')
-ingrediente.addEventListener('click', adicionarIngrediente)
+// const ingrediente = document.querySelector('.adicionar-ingrediente')
+// ingrediente.addEventListener('click', adicionarIngrediente)
 
-const passo = document.querySelector('.adicionar-passo')
-passo.addEventListener('click', adicionarPasso)
+// const passo = document.querySelector('.adicionar-passo')
+// passo.addEventListener('click', adicionarPasso)
 
 
 const PhotosUpload = {
@@ -136,3 +136,28 @@ const PhotosUpload = {
     }
 }
 
+function addIngrediente() {
+    const div = document.querySelector('div#ingredientes')
+    const input = document.querySelector('div#ingredientes > input')
+    const clone = input.cloneNode(true)
+
+    if (div.lastElementChild.value == '') {
+        return false
+    } else {
+        clone.value = ''
+        div.appendChild(clone)
+    }
+}
+
+function addPasso() {
+    const div = document.querySelector('div#passo')
+    const input = document.querySelector('div#passo > input')
+    const clone = input.cloneNode(true)
+
+    if (div.lastElementChild.value == '') {
+        return false
+    } else {
+        clone.value = ''
+        div.appendChild(clone)
+    }
+}

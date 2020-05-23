@@ -4,17 +4,26 @@
             <a href="/"><img src="/assets/logo.png" alt="Logo Foodfy"></a>
         </li>
         <li>
-            <a href="/receitas">Receitas</a>
+            <a href="/sobre">Sobre</a>
+        </li>
+        <li>
+            <a href="/recipes">Receitas</a>
+        </li>
+        <li>
+            <a href="/chefs">Chefs</a>
         </li>
         <li>
             <a href="/admin">Admin</a>
         </li>
-        <li>
-            <form action="/receitas" method="GET">
+        <li class="filter">
+            <form action="/recipes/search" method="GET">
                 <input 
                     type="text" 
                     name="filter"
                     placeholder="Buscar uma receita"
+                    {% if search.term%}
+                        value = {{search.term}}
+                    {% endif %}
                 >
                 <button type="submit">Buscar</button>
             </form>

@@ -1,4 +1,4 @@
-{% extends "layout.njk" %}
+{% extends "site/layout.njk" %}
 
 {% block content %}
 
@@ -23,16 +23,13 @@
 
         <section class="cards">
             {% for recipe in recipes %}
-
                 <div class="card">
                     <div class="card__image-content">
-                        <!-- inserir a imagem -->
-                        <img src='{{recipe.image}}' alt="">
+                        <img src='{{recipe.img}}' alt="">
                     </div>
                     <div class="card__info">
-                        <!-- inserir nome da comida -->
                         <p>{{recipe.title}}</p>
-                        <p>{{chef.name}}</p>
+                        <p>por {{recipe.chef_name}}</p>
                     </div>
                 </div>
             {% endfor %}

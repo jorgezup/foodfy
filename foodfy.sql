@@ -1,6 +1,6 @@
 CREATE TABLE "recipes" (
   "id" SERIAL PRIMARY KEY,
-  "chef_id" integer UNIQUE,
+  "chef_id" integer,
   "title" text NOT NULL,
   "ingredients" text[],
   "preparation" text[],
@@ -12,7 +12,7 @@ CREATE TABLE "recipes" (
 CREATE TABLE "chefs" (
   "id" SERIAL PRIMARY KEY,
   "name" text NOT NULL,
-  "file_id" integer UNIQUE,
+  "file_id" integer,
   "created_at" timestamp DEFAULT (now()),
   "updated_at" timestamp DEFAULT (now())
 );
@@ -25,8 +25,8 @@ CREATE TABLE "files" (
 
 CREATE TABLE "recipe_files" (
   "id" SERIAL PRIMARY KEY,
-  "recipe_id" integer UNIQUE,
-  "file_id" integer UNIQUE
+  "recipe_id" integer,
+  "file_id" integer
 );
 
 ALTER TABLE "recipes" ADD FOREIGN KEY ("chef_id") REFERENCES "chefs" ("id");

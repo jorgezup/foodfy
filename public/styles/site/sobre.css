@@ -1,0 +1,22 @@
+div.container div.sobre {
+    margin-bottom: 30px;
+}
+
+div.container div.sobre h3 {
+    font-weight: bold;
+    font-size: 2rem;
+
+    margin-bottom: 20px;
+}
+
+div.container div.sobre p {
+    font-size: 1.8rem;
+
+    color: #444444;
+
+    line-height: 2.8rem;
+}
+
+div.container div.sobre p + p {
+    margin-top: 15px;
+}

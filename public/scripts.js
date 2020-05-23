@@ -52,16 +52,35 @@ if (pagination) {
     createPagination(pagination)
 }
 
-console.log
 
 const currentPage = location.pathname
 const menuItems = document.querySelectorAll("header ul li a")
 
-
+console.log(currentPage)
 /* Adiciona a classe active conforme a página que está */
 for (let item of menuItems) {
-    console.log(item)
     if (currentPage.includes(item.getAttribute("href"))) {
         item.classList.add("active")
+    }
+}
+/* Remove a busca do header, se a página for chefs ou sobre */
+if (currentPage == '/chefs' || currentPage == '/sobre') {
+    const header = document.querySelector('header ul')
+    const busca = header.lastElementChild
+    busca .classList.add('hidden')
+    console.log(busca)
+}
+
+
+/* Recipe Show (a.toggle -> esconder/mostrar) */
+function hiddenList (event) { /* event target é o a */
+    const list = event.target.nextElementSibling
+    if (list.classList.contains('hidden')) {
+        list.classList.remove('hidden')
+        event.target.innerHTML = "esconder"
+    }
+    else {
+        list.classList.add('hidden')
+        event.target.innerHTML = "mostrar"
     }
 }
