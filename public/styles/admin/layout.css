@@ -1,35 +1,88 @@
-div.admin {
+div.container-admin {
     background-color: var(--principal-color);
 }
 
-div.admin header.container ul {
+div.container-admin header {
+    width: 940px;
+    height: 80px;   
+    
+    margin: 0 auto;
+}
+
+div.container-admin header nav {
     display: flex;
-
-    height: 80px;
+    flex-direction: row;
 }
 
-div.admin header.container ul li{
-    align-self: center;
+div.container-admin header nav ul{
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    margin-top: 27px;
 }
 
-div.admin header.container ul li:nth-child(1) {
+div.container-admin header nav ul li:nth-child(1) {
     margin-right: 50px;
 }
 
-div.admin header.container ul li:nth-child(2){
-    margin-right: 30px;
+div.container-admin header nav ul li {
+    margin-right: 25px;
+}
+
+div.container-admin header nav ul li.right {
+    margin-right: initial;
+    margin-left: auto;
 }
 
 
-div.admin header li a {
-    color: white;
+div.container-admin header nav ul li a,
+div.container-admin header nav ul li.right button {
+    color: #999999;
     width: 100%;
-
+    
     font-weight: bold;
     font-size: 1.5rem;
     line-height: 1.8rem;
-
+    
     text-transform: uppercase;
+}
+
+/* Botão de Sair */
+div.container-admin header nav ul li.right button {
+    background-color: initial;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+/* Header Active */
+div.container-admin header nav ul li a.active {
+    color: #FFFFFF;
+}
+
+/* Index */
+div.container div.center {
+    margin-top: 50px;
+}
+
+div.container div.center h3 {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: bold;
+    font-size: 2.4rem;
+
+    margin-bottom: 20px;
+}
+
+div.container div.center p {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+}
+
+div.container div.center p:first-of-type {
+    margin-bottom: 20px;
 }
 
 /*  H2 da página e botões */
@@ -45,8 +98,6 @@ div.container div.title  h2{
     
     font-size: 2.4rem;
     font-weight: bold;
-
-    display: inline-block;
 }
 
 /* Botoes */
@@ -77,7 +128,16 @@ div.botoes a.button.salvar {
     
     font-weight: bold;
     font-size: 1.6rem;
+}
 
+div.botoes.edit {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 7px 0 0 0;
 }
 
 /* Label */
@@ -96,16 +156,20 @@ div.container label:first-of-type {
 
 /* Inputs */
 div.container form input[type="text"],
+div.container form input[type="email"],
+div.container form input[type="password"],
 div.container form select,
 div.container form textarea {
     width: 100%;
+    height: 50px;
+    
     background-color: white;
 
     border: 1px solid #dddddd;
     border-radius: 4px;
 
     padding: 15px 20px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 
     resize: none;
 }
@@ -114,8 +178,6 @@ div.container form textarea {
 div.card-chef__info a.visualizar,
 div.container button.adicionar-item {
     display: block;
-
-    margin-top: 15px;
 
     font-weight: bold;
     font-size: 1.6rem;
@@ -127,8 +189,13 @@ div.container button.adicionar-item {
     cursor: pointer;
 }
 
+div.card-chef__info a.visualizar {
+    margin-bottom: 15px;
+}
 
-div.botoes.edit {
+
+
+/* div.botoes.edit {
     position: absolute;
     top: 0;
     right: 0;
@@ -136,7 +203,7 @@ div.botoes.edit {
     display: flex;
     flex-direction: row-reverse;
     margin-top: 7px;
-}
+} */
 
 /* Visualizar Chefs */
 div.card-chef__info a.visualizar {
@@ -231,4 +298,5 @@ div.container form div#photos-preview img{
 }
 #photos-preview .photo:hover i{
     opacity: 1;
-}
+} 
+

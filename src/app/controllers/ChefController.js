@@ -17,7 +17,7 @@ module.exports = {
                 chef['img'] = img.rows[0].path 
             }
 
-            return res.render('admin/chefs/index', {chefs})
+            return res.render('admin/chefs/index', {chefs, req})
                      
         } catch (error) {
             console.error(error)
@@ -25,7 +25,7 @@ module.exports = {
     },
     create(req, res) {
         try {
-            return res.render('admin/chefs/create')
+            return res.render('admin/chefs/create', {req})
         } catch (error) {
             console.error(error)
         }
@@ -63,6 +63,7 @@ module.exports = {
         }
     },
     async show (req, res) {
+        console.log(req)
         try {
             const { id } = req.params
             
@@ -97,7 +98,7 @@ module.exports = {
             }
 
 
-            return res.render('admin/chefs/show', {chef, recipes})
+            return res.render('admin/chefs/show', {chef, recipes, req})
             
         } catch (error) {
             console.error(error)
@@ -121,7 +122,7 @@ module.exports = {
                 name: img.rows[0].name
             })
 
-            return res.render(`admin/chefs/edit`, {chef, files})
+            return res.render(`admin/chefs/edit`, {chef, files, req})
 
         } catch (error) {
             console.error(error)

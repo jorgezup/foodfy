@@ -10,9 +10,11 @@
     <div class="container">
         <div class="title">
             <h2>Receita: {{recipe.title}}</h2>
-            <div class="botoes">
-                <a class="button salvar" href="/admin/recipes/{{recipe.id}}/edit" >Editar receita</a>
-            </div>
+            {% if req.user.id == recipe.user_id %}
+                <div class="botoes">
+                    <a class="button salvar" href="/admin/recipes/{{recipe.id}}/edit" >Editar receita</a>
+                </div>
+            {% endif %}
         </div>
 
         <div class="gallery">

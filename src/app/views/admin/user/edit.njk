@@ -1,0 +1,32 @@
+{% extends "admin/layout-admin.njk" %}
+
+{% block content %}
+
+	<div class="container user-dashboard">
+		<div class="title">
+			<h2>Bem vindo {{user.name}}</h2>
+		</div>
+		<form action="/admin/profile?_method=PUT" method="POST">
+			<input type="hidden" name="id" value="{{user.id}}">
+
+			<div class="fields">
+
+				{% include "./fields-edit.njk" %}
+			</div>
+
+				<div class="botoes edit">
+					<button type="submit" class="button salvar">Salvar</button>
+				</div>
+			</form>
+	</div>
+
+	<script>
+		const formDelete = document.querySelector("#form-delete")
+		formDelete.addEventListener("submit", function (event) {
+			const confirmation = confirm("Tem certeza que deseja excluir sua conta ?")
+			if (!confirmation) {
+				event.preventDefault()
+			}
+		})
+	</script>
+{% endblock %}

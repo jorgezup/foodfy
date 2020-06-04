@@ -44,3 +44,8 @@ div.grid div.container-receita div.informacoes-receita a{
     color: var(--purple);
 }
 
+div#ingredientes input,
+div#passo input {
+    margin-bottom: 15px;
+}
+

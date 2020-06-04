@@ -55,8 +55,6 @@ if (pagination) {
 
 const currentPage = location.pathname
 const menuItems = document.querySelectorAll("header ul li a")
-
-console.log(currentPage)
 /* Adiciona a classe active conforme a página que está */
 for (let item of menuItems) {
     if (currentPage.includes(item.getAttribute("href"))) {
@@ -68,7 +66,6 @@ if (currentPage == '/chefs' || currentPage == '/sobre') {
     const header = document.querySelector('header ul')
     const busca = header.lastElementChild
     busca .classList.add('hidden')
-    console.log(busca)
 }
 
 

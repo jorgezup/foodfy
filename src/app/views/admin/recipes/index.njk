@@ -9,6 +9,9 @@
 
         <div class="title">
             <h2>Gerenciar receitas</h2>
+            <div class="botoes">
+                <a href="/admin/recipes/create" class="button salvar">Nova Receita</a>
+            </div>
         </div>
 
         <div class="grid">
@@ -23,16 +26,12 @@
                 </div>
             {% endfor %}
         </div>
-
+{# 
         <div class="pagination"
             data-page = {{pagination.page}}
             data-total = {{pagination.total}}
             data-filter = {{filter}}
-        ></div>
+        ></div> #}
 
     </div>
-{% endblock %}
-
-{% block script %}
-    <script src="/scripts.js"></script>
 {% endblock %}

@@ -1,0 +1,40 @@
+@keyframes hidemessage {
+    to {
+        top: -50px;
+        opacity: 0;
+    }
+}
+
+.messages {
+    text-align: center;
+
+    padding: 55px;
+
+    color: white;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 1.6rem;
+    font-weight: bold;
+
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    width: 344px;
+    height: 135px;
+    
+    z-index: 100;
+
+    opacity: 1;
+
+    animation: hidemessage 400ms 5s ease-out forwards;
+}
+
+.messages.errors {
+    background-color: var(--red);
+}
+
+.messages.success {
+    background-color: green;
+}
+
+

@@ -1,0 +1,64 @@
+/* div.container.users header {
+    margin-top: 55px;
+    margin-bottom: 70px;
+} */
+
+/* div.container.users header h2{
+    font-family: 'Helvetica', sans-serif;
+    font-weight: bold;
+    font-size: 2.4rem;
+} */
+div.users div.title div.botoes a {
+    padding: 9px 46px;
+}
+
+
+div.users section.cards-users {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+section.cards-users div.card-user {
+    margin-bottom: 50px;
+}
+
+section.cards-users div.card-user div.card-user__info > p:first-of-type {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 1.8rem;
+    margin-bottom: 4px;
+}
+
+
+section.cards-users div.card-user div.card-user__info > p:nth-child(2) {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 1.4rem;
+    color: #777777;
+}
+
+section.cards-users div.card-user div.card-user__info div.card-user__button {
+    margin-top: 16px;
+    display: flex;
+}
+
+section.cards-users div.card-user div.card-user__info div.card-user__button a,
+section.cards-users div.card-user div.card-user__info div.card-user__button button {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+
+section.cards-users div.card-user div.card-user__info div.card-user__button a{
+    margin-right: 16px;
+
+    color: #6558C3;
+}
+
+section.cards-users div.card-user div.card-user__info div.card-user__button button {
+    color: #F55A5A;
+    background-color:initial;
+    cursor: pointer;
+}
+
+

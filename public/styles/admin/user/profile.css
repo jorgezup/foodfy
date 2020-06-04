@@ -1,0 +1,5 @@
+div.container.user-dashboard div.fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}

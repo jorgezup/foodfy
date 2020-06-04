@@ -5,10 +5,16 @@ const RecipeFile = require('../models/RecipeFile')
 
 module.exports = {
     async index(req, res) {
+        let recipes = req.recipes
         try {
-            let recipes = await Recipe.findAll({'ORDER BY':'updated_at'})
-            
-            if (recipes == "") return res.send('Receitas não encontradas!')
+            if (recipes == undefined) {
+                recipes = await Recipe.findAll({'ORDER BY':'updated_at'})
+                console.log(recipes)
+                
+                if (recipes == "") return res.render('admin/recipes', {
+                    error: "Não há receitas cadastradas!"
+                })
+            }
 
             /* Get Images */
             for (let recipe of recipes) {
@@ -21,8 +27,7 @@ module.exports = {
                     recipe['chef_name'] = Object.values(chefName.rows[0])
                 }
             }
-            
-            return res.render('admin/recipes/index', {receitas: recipes})
+            return res.render('admin/recipes/index', {receitas: recipes, req})
             
         } catch (error) {
             console.error(error)
@@ -48,7 +53,10 @@ module.exports = {
             }
 
             if (req.files.length == 0) {
-                return res.send('Por favor, envie pelo menos uma imagem')
+                return res.render('admin/recipes/create', {
+                    recipe: req.body,
+                    error: "Envie pelo menos uma imagem!"
+                })
             }
             
             let filesId = []
@@ -63,12 +71,16 @@ module.exports = {
             }) 
 
             const { chef_id, title, ingredients, preparation, information } = req.body
+
+            let user_id = req.session.userId
+            
             const recipeId = await Recipe.create({
                 chef_id,
                 title,
                 ingredients,
                 preparation,
-                information
+                information,
+                user_id
             })
 
             for (let fileId of filesId) {
@@ -84,7 +96,7 @@ module.exports = {
     async show (req, res) {
         try {
             const { id } = req.params
-
+            
             const recipe = await Recipe.findById(id)
 
             const chef = await Chef.findById(recipe.chef_id)
@@ -104,7 +116,7 @@ module.exports = {
               })
           }
           
-            return res.render('admin/recipes/show', {recipe, chef, files})
+            return res.render('admin/recipes/show', {recipe, chef, files, req})
             
         } catch (error) {
             console.error(error)
@@ -131,15 +143,14 @@ module.exports = {
                 })
             }
         
-            return res.render('admin/recipes/edit', {recipe, chefs, files})
+            return res.render('admin/recipes/edit', {recipe, chefs, files, req})
         } catch (error) {
             console.error(error)
         }
     },
     async put (req, res) {
         try {
-            const keys = Object.keys(req.body)            
-
+            const keys = Object.keys(req.body)
             for (key of keys) {
                 if (req.body[key] == "" && key != "information" && key != "removed_files") {
                     return res.send("Preencha todos os campos!")
@@ -210,6 +221,6 @@ module.exports = {
 
         await Recipe.delete(req.body.id)
 
-        return res.redirect(`/admin/recipes`)
+        res.redirect(`/admin/recipes`)
     }
 }

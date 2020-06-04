@@ -1,0 +1,40 @@
+{% extends "admin/layout-admin.njk" %}
+
+{% block content %}
+
+	<div class="container user-dashboard">
+		<div class="title">
+			<h2>Atualizar Usuário</h2>
+		</div>
+		<form action="/admin/users?_method=PUT" method="POST">
+			<input type="hidden" name="id" value="{{user.id}}">
+
+			<div class="fields">
+				{% include "./fields.njk" %}
+			</div>
+
+			<div class="botoes edit">
+				<button type="submit" class="button salvar">Salvar</button>
+			</form>
+				<form id="form-delete" action="/admin/users?_method=DELETE" method="POST">
+					<input type="hidden" name="id" value="{{user.id}}">
+					<button type="submit" class="button deletar">Deletar</button>
+				</form>
+
+		</div>
+	</div>
+
+{% endblock %}
+{% block script %}
+
+<script>
+	const formDelete = document.querySelector("#form-delete")
+	formDelete.addEventListener("submit", function (event) {
+		const confirmation = confirm("Tem certeza que deseja excluir esta conta ?")
+		if (!confirmation) {
+			event.preventDefault()
+		}
+	})
+</script>
+
+{% endblock %}

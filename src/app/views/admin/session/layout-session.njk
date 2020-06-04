@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Foodfy</title>
+        {% include "admin/parts/styles.njk" %}
+    </head>
+    <body>
+        {% include "admin/parts/messages.njk" %}
+
+        <div class="container session ">
+			<header>
+            	<img src="/assets/logo.png" alt="Logo Foodfy">
+			</header>
+
+            {% block content %}{% endblock %}
+
+
+        {% block script %}
+        
+            <script src="/scripts-admin.js"></script>
+        {% endblock %}
+        </div>
+
+    </body>
+</html>

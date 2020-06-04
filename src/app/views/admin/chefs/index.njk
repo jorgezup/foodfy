@@ -1,34 +1,35 @@
 {% extends "admin/layout-admin.njk" %}
 
 {% block head %}
-    <link rel="stylesheet" href="/styles/admin/chefs.css">
+	<link rel="stylesheet" href="/styles/admin/chefs.css">
 {% endblock %}
 
 {% block content %}
 
-    <div class="container">
+	<div class="container">
 
-        <div class="title">
-            <h2>Gerenciar chefs</h2>
-        </div>
+		<div class="title">
+			<h2>Gerenciar chefs</h2>
+			{% if req.user.is_admin %}
+				<div class="botoes">
+					<a href="/admin/chefs/create" class="button salvar">Novo Chef</a>
+				</div>
+			{% endif %}
+		</div>
 
-        <section class="cards-chef">
-            {% for chef in chefs %}
-                <div class="card-chef">
-                    <div class="card-chef__image-content">
-                        <img src="{{chef.img}}" alt="Imagem do chef {{chef.name}}">
-                    </div>
-                    <div class="card-chef__info">
-                        <p>{{chef.name}}</p>
-                        <a href="/admin/chefs/{{chef.id}}" class="visualizar">Visualizar</a>
-                    </div>
-                </div>
-            {% endfor %}
+		<section class="cards-chef">
+			{% for chef in chefs %}
+				<div class="card-chef">
+					<div class="card-chef__image-content">
+						<img src="{{chef.img}}" alt="Imagem do chef {{chef.name}}">
+					</div>
+					<div class="card-chef__info">
+						<p>{{chef.name}}</p>
+						<a href="/admin/chefs/{{chef.id}}" class="visualizar">Visualizar</a>
+					</div>
+				</div>
+			{% endfor %}
+		</section>
+	</div>
 
-        </div>
-
-    {% endblock %}
-
-    {# {% block script %}
-        <script src="/scripts-cards.js"></script>
-    {% endblock %} #}
+{% endblock %}

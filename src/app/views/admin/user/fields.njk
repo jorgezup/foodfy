@@ -1,0 +1,19 @@
+<div>
+    <label>Nome</label>
+    <input type="text" name="name" value="{{user.name}}">
+</div>
+
+<div>
+    <label>Email</label>
+    <input 
+        type="email" 
+        name="email" 
+        value="{{user.email}}"
+        onblur="Validate.apply(this,'isEmail')"
+    >
+</div>
+
+<div>
+    <input type="checkbox" name="is_admin">
+    <label>Administrador</label> 
+</div>
