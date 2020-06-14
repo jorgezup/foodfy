@@ -1,0 +1,9 @@
+div.container.user-dashboard.edit div.botoes.edit button {
+    width: 139px;
+    padding: 8px auto;
+}
+
+div.container.user-dashboard.edit div.botoes.edit button.deletar {
+    margin-right: 16px;
+    background-color: #DC4747;
+}

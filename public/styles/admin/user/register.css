@@ -1,17 +1,17 @@
-div.user-register form {
-    display: flex;
-    flex-wrap: wrap;
-
-    margin-top: 60px;
+div.user-register div.fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
 }
 
-div.user-register form input {
+
+div.user-register div.fields input {
     font-family: 'Helvetica', sans-serif;
     font-size: 1.6rem;
     margin-bottom: initial;
 }
 
-div.user-register form input[type="checkbox"] {
+div.user-register div.fields input[type="checkbox"] {
     width: 15px;
     height: 15px;
 
@@ -21,23 +21,27 @@ div.user-register form input[type="checkbox"] {
     margin-right: 8px;
 }
 
-div.user-register form div {
-    flex: 0 450px;
-    margin-bottom: 30px;
-}
-
-div.user-register form div label {
-    margin-bottom: 10px;
-}
-
-div.user-register form div.left {
-    margin-right: 40px;
-}
-
-div.user-register button#cancelar{
-    margin-left: 16px;
-
+div.user-register div.botoes a.button#cancelar  {
     background-color: #8A8A8A;
+    border-radius: 4px;
+
+    font-family: 'Helvetica', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+
+    color: #FFFFFF;
+    text-align: center;
+
+    padding: 8px auto;
+
+    width: 139px;
+}
+
+
+div.user-register div.botoes.edit button.button.salvar {
+    padding: 8px auto;
+    width: 139px;
+    margin-right: 16px;
 }
 
 /* Validate Errors */

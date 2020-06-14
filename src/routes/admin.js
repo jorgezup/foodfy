@@ -8,6 +8,7 @@ const ChefController = require('../app/controllers/ChefController')
 
 const { onlyUsers, isAdmin, isLoggedRedirect} = require('../app/middlewares/session')
 const { ownerRecipe, verifyOwnerRecipe } = require('../app/middlewares/recipe')
+const { chefExists } = require('../app/middlewares/chef')
 
 /* ----------------------------- Admin ----------------------------------------*/
 routes.get('', isLoggedRedirect, 
@@ -16,7 +17,7 @@ routes.get('', isLoggedRedirect,
     })
 /*============================ Receitas =====================================*/
 routes.get("/recipes", onlyUsers, verifyOwnerRecipe, RecipeController.index); // Mostrar a lista de receitas
-routes.get("/recipes/create", onlyUsers, RecipeController.create); // Mostrar formulário de nova receita
+routes.get("/recipes/create", onlyUsers, chefExists, RecipeController.create); // Mostrar formulário de nova receita
 routes.get("/recipes/:id", onlyUsers, ownerRecipe, RecipeController.show); // Exibir detalhes de uma receita
 routes.get("/recipes/:id/edit", onlyUsers, ownerRecipe, RecipeController.edit); // Mostrar formulário de edição de receita
 

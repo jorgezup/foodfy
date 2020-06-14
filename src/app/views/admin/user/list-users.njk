@@ -6,7 +6,7 @@
 
     <div class="title">
       <h2>Usuários</h2>
-      {% if req.user.is_admin %}
+      {% if isAdmin %}
         <div class="botoes">
           <a href="/admin/new-user" class="button salvar">Novo</a>
         </div>
@@ -22,7 +22,7 @@
             <div class="card-user__button">
               <a href="/admin/users/{{user.id}}/edit">Editar</a>
               
-              <form id="form-delete" action="/users?_method=DELETE" method="POST">
+              <form id="form-delete" action="/admin/users?_method=DELETE" method="POST">
                 <input type="hidden" name="id" value="{{user.id}}">
                 <button type="submit" class="button delete">Deletar</button>
               </form>

@@ -2,7 +2,7 @@ const User = require('../models/User')
 
 async function onlyUsers(req, res, next) {
     if (!req.session.userId) {
-        return res.redirect('/users/login')
+        return res.redirect('/admin')
     }
 
     const user = await User.findOne({where:{id:req.session.userId}})
@@ -12,9 +12,11 @@ async function onlyUsers(req, res, next) {
     next()
 }
 
-function isLoggedRedirect(req, res, next) {
+async function isLoggedRedirect(req, res, next) {
     if (req.session.userId) {
-        return res.render('admin/index', {req})
+        const user = await User.findOne({where:{id:req.session.userId}})
+        const isAdmin = user.is_admin
+        return res.render('admin/index', {isAdmin})
     }
 
     next()
@@ -28,7 +30,7 @@ async function isAdmin(req, res, next) {
             error: "Acesso negado"
         })
     }
-
+    req.user = user
     next()
 }
 

@@ -10,7 +10,7 @@
 
 		<div class="title">
 			<h2>Gerenciar chefs</h2>
-			{% if req.user.is_admin %}
+			{% if isAdmin %}
 				<div class="botoes">
 					<a href="/admin/chefs/create" class="button salvar">Novo Chef</a>
 				</div>

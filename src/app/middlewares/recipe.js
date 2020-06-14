@@ -23,7 +23,7 @@ async function verifyOwnerRecipe(req, res, next) {
         const recipes = await Recipe.findAll({where:{user_id:userId}})
         if (recipes == "") {
             return res.render('admin/recipes/index', {
-                error: "Você não possui receitas cadastradas."
+                // error: "Você não possui receitas cadastradas."
             })
         } else {
             req.recipes = recipes

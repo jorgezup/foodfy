@@ -29,6 +29,7 @@ section.card-login div.fields > div{
 
 section.card-login div.botoes.login {
     display: flex;
+    align-items: center;
 }
 
 section.card-login div.botoes.login a{
@@ -40,4 +41,17 @@ section.card-login div.botoes.login a{
 
 section.card-login div.botoes.login button{
     margin-left: auto;
+}
+
+/* Input Error Login */
+@keyframes hideborder {
+    to {
+        border: 1px solid #dddddd;
+    }
+}
+
+section.card-login div.fields input.input-error {
+    border: 1px solid var(--red);
+
+    animation: hideborder 400ms 5s ease-out forwards;
 }

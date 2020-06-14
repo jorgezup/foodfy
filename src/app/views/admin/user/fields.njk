@@ -1,6 +1,11 @@
 <div>
     <label>Nome</label>
-    <input type="text" name="name" value="{{user.name}}">
+    <input 
+        type="text" 
+        name="name" 
+        value="{{user.name}}"
+        placeholder="Digite o nome completo"
+    >
 </div>
 
 <div>
@@ -9,11 +14,32 @@
         type="email" 
         name="email" 
         value="{{user.email}}"
+        placeholder="Digite o email"
         onblur="Validate.apply(this,'isEmail')"
     >
 </div>
 
+
 <div>
-    <input type="checkbox" name="is_admin">
+    {% if user.is_admin == true %}
+    <input 
+        type="checkbox" 
+        name="is_admin"
+        value=true
+        checked
+    >
+    {% else %}
+    <input 
+        type="checkbox" 
+        name="is_admin"
+        value=true 
+    >
+    {% endif %}
+
     <label>Administrador</label> 
 </div>
+
+
+{# {% if user.is_admin == true %}
+            checked
+        {% endif %} #}

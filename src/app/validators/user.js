@@ -102,12 +102,28 @@ async function update(req, res, next) {
     req.user = user 
 
     next()
-} 
+}
+
+async function remove(req, res, next) {
+    const userId = req.session.userId
+    const user = await User.findById(req.body.id)
+    console.log(user)
+
+    if (userId == req.body.id) return res.render('admin/user/edit-admin', {
+        user:user,
+        error: "Você não pode deletar sua própria conta."
+    })
+
+    req.user = user
+    
+    next()
+}
 
 
 
 module.exports = {
     post,
     show,
-    update
+    update,
+    remove
 }

@@ -6,7 +6,7 @@ const { hash } = require('bcryptjs')
 
 module.exports = {
     loginForm(req, res) {
-        return res.render('admin/session/login', {req})
+        return res.render('admin/session/login')
     },
     login(req, res) {
         req.session.userId = req.user.id
@@ -18,7 +18,7 @@ module.exports = {
         return res.redirect('/')
     },
     forgotPasswordForm(req, res) {
-        return res.render('admin/session/forgot-password', {req})
+        return res.render('admin/session/forgot-password')
     },
     async forgotPassword(req, res) {
         try {
@@ -40,7 +40,7 @@ module.exports = {
                 html: `<h2>Token de Recuperação</h2>
                 <p>Clique no link para recuperar sua senha.</p>
                 <p>
-                    <a href="http://localhost:3000/users/reset-password?token=${token}" target="_blank">
+                    <a href="http://localhost:3000/admin/users/reset-password?token=${token}" target="_blank">
                         RECUPERAR SENHA
                     </a>
                 </p>

@@ -42,3 +42,11 @@ const Validate = {
         }
     }
 }
+
+const divError = document.querySelector('.messages.errors')
+if (divError) {
+    const inputsElement = document.querySelectorAll('form div.fields input')
+    inputsElement.forEach(inputElement => {
+        inputElement.classList.add('input-error')
+    });
+}

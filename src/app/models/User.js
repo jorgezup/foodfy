@@ -4,7 +4,9 @@ const mailer = require('../../lib/mailer')
 const { hash } = require('bcryptjs')
 
 
-
+const Recipe = require('../models/Recipe')
+const RecipeFile = require('../models/RecipeFile')
+const File = require('../models/File')
 const Base = require('./Base')
 
 Base.init({ table: 'users' })
@@ -12,7 +14,6 @@ Base.init({ table: 'users' })
 module.exports = {
     ...Base,
     async create(data) {
-        crypto.r
         const password = crypto.randomBytes(4).toString("hex")
         const query = `
             INSERT INTO users (
@@ -40,8 +41,6 @@ module.exports = {
             admin
         ]
 
-        console.log(password)
-
         await mailer.sendMail({
             to: data.email,
             from: 'no-replay@foodfy.com.br',
@@ -58,25 +57,22 @@ module.exports = {
 
         return results.rows[0].id
     },
-    // async update(id, fields) {
-    //     let query = "UPDATE users SET"
+    async delete(id) {
+        const recipes = await Recipe.findAll({ where: { user_id: id } })
 
-    //     Object.keys(fields).map((key, index, array) => {
-    //         if((index + 1) < array.length) {
-    //             query = `${query}
-    //                 ${key} = '${fields[key]}',
-    //             `
-    //         } else {
-    //             query = `${query}
-    //                 ${key} = '${fields[key]}'
-    //                 WHERE id = ${id}
-    //             `
-    //         }
-    //     })
-    //     console.log(query)
+        if (recipes != "") {
+            recipes.forEach(async function (recipe) {
+                let recipeFiles = await RecipeFile.find(recipe.id) // [ { id: 15, recipe_id: 5, file_id: 20 }, ]
+                for (let i = 0; i < recipeFiles.rows.length; i++) {
+                    let files = recipeFiles.rows[i]
+                    let fileId = Number(Object.values(files))
 
-    //     await db.query(query)
-
-    //     return
-    // }
+                    await RecipeFile.delete(fileId)
+                    await File.delete(fileId)
+                }
+                await Recipe.delete(recipe.id)
+            });
+        }
+        return db.query(`DELETE FROM users WHERE id =${id}`)
+    }
 }

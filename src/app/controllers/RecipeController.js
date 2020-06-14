@@ -3,41 +3,80 @@ const Chef = require('../models/Chef')
 const File = require('../models/File')
 const RecipeFile = require('../models/RecipeFile')
 
+async function getImagesRecipe(req, recipeId) {
+    const results = await Recipe.recipeFiles(recipeId) /* return   { id: 5, recipe_id: 52, file_id: 10 } */
+    let files = []
+    for (let i=0; i < results.rows.length; i++){
+        let img = await File.findAll({where:{id:results.rows[i].file_id}})
+        img[0].path = `${req.protocol}://${req.headers.host}${img[0].path.replace("public", "")}`
+        files.push({
+            id: img[0].id,
+            src:img[0].path,
+            name: img[0].name
+        })
+    }
+
+    return files
+}
+
+async function getRecipeFirstImage(recipe, req) {
+    let fileIdFirstImage = await (await Recipe.recipeFiles(recipe.id)).rows[0].file_id
+    let imagePath = await (await File.findAll({where:{id:fileIdFirstImage}}))[0].path
+    let image = `${req.protocol}://${req.headers.host}${imagePath.replace("public", "")}`
+    return image
+}
+
+async function getChefName(chefId) {
+    let chef = await (await Chef.searchName(chefId)).rows[0]
+    let chefName = Object.values(chef)
+    return chefName
+}
+
 module.exports = {
     async index(req, res) {
         let recipes = req.recipes
+        const isAdmin = req.user.is_admin
         try {
             if (recipes == undefined) {
                 recipes = await Recipe.findAll({'ORDER BY':'updated_at'})
-                console.log(recipes)
                 
-                if (recipes == "") return res.render('admin/recipes', {
-                    error: "Não há receitas cadastradas!"
-                })
+                if (recipes == "") return res.render('admin/recipes/index', {isAdmin})
             }
+            
+            // /* Get Images */
+            // for (let recipe of recipes) {
+            //     const results = await Recipe.recipeFiles(recipe.id) /* return   { id: 5, recipe_id: 52, file_id: 10 } */
+            //     for (let i=0; i < 1; i++){ /* Pega só a primeira imagem de cada receita */
+            //         let img = await File.findAll({where:{id:results.rows[i].file_id}})
+            //         img[0].path = `${req.protocol}://${req.headers.host}${img[0].path.replace("public", "")}`
+            //         recipe['img'] = img[0].path
+            //         let chefName = await Chef.searchName(recipe.chef_id)
+            //         recipe['chef_name'] = Object.values(chefName.rows[0])
+            //     }
+            // }
 
-            /* Get Images */
-            for (let recipe of recipes) {
-                const results = await Recipe.recipeFiles(recipe.id) /* return   { id: 5, recipe_id: 52, file_id: 10 } */
-                for (let i=0; i < 1; i++){ /* Pega só a primeira imagem de cada receita */
-                    let img = await Recipe.files(results.rows[i].file_id)
-                    img.rows[0].path = `${req.protocol}://${req.headers.host}${img.rows[0].path.replace("public", "")}`
-                    recipe['img'] = img.rows[0].path
-                    let chefName = await Chef.searchName(recipe.chef_id)
-                    recipe['chef_name'] = Object.values(chefName.rows[0])
-                }
-            }
-            return res.render('admin/recipes/index', {receitas: recipes, req})
+            recipes = await Promise.all (
+                recipes.map(async recipe => {
+                    recipe
+                    recipe['img'] = await getRecipeFirstImage(recipe, req)
+                    recipe['chef_name'] = await getChefName(recipe.chef_id)
+                    return recipe
+            })
+        )
+            return res.render('admin/recipes/index', {receitas: recipes, isAdmin})
             
         } catch (error) {
             console.error(error)
         }
     },
     async create(req, res) {
+
         try {
+            const isAdmin = req.user.is_admin
+
             const chefs = await Chef.findAll()
 
-            return res.render('admin/recipes/create', {chefs})
+            return res.render('admin/recipes/create', {chefs, isAdmin})
         } catch (error) {
             console.error(error)
         }
@@ -53,20 +92,20 @@ module.exports = {
             }
 
             if (req.files.length == 0) {
-                return res.render('admin/recipes/create', {
-                    recipe: req.body,
-                    error: "Envie pelo menos uma imagem!"
-                })
+                return res.send('Envie pelo menos uma imagem!')
             }
             
             let filesId = []
 
-            const filesPromise = req.files.map(file => File.create({...file}))
+            const filesPromise = req.files.map(file => File.create({
+                name: file.filename, 
+                path: file.path
+            }))
             await Promise.all(filesPromise)
             .then ((values) => {
                 for (let index = 0; index < values.length; index++) {
-                    let element = values[index].rows[0]
-                    filesId.push(element.id)
+                    let element = values[index]
+                    filesId.push(element)
                 }
             }) 
 
@@ -82,7 +121,7 @@ module.exports = {
                 information,
                 user_id
             })
-
+            
             for (let fileId of filesId) {
                 await RecipeFile.create(recipeId, fileId)
             }
@@ -104,17 +143,20 @@ module.exports = {
             if (!recipe) return res.send('Receitas não encontradas!')
 
           /* Get Images */
-          const results = await Recipe.recipeFiles(recipe.id) /* return   { id: 5, recipe_id: 52, file_id: 10 } */
-          let files = []
-          for (let i=0; i < results.rows.length; i++){
-              let img = await Recipe.files(results.rows[i].file_id)
-              img.rows[0].path = `${req.protocol}://${req.headers.host}${img.rows[0].path.replace("public", "")}`
-              files.push({
-                  id: img.rows[0].id,
-                  src:img.rows[0].path,
-                  name: img.rows[0].name
-              })
-          }
+        //   const results = await Recipe.recipeFiles(recipe.id) /* return   { id: 5, recipe_id: 52, file_id: 10 } */
+        //   let files = []
+        //   for (let i=0; i < results.rows.length; i++){
+        //       let img = await Recipe.files(results.rows[i].file_id)
+        //       img.rows[0].path = `${req.protocol}://${req.headers.host}${img.rows[0].path.replace("public", "")}`
+        //       files.push({
+        //           id: img.rows[0].id,
+        //           src:img.rows[0].path,
+        //           name: img.rows[0].name
+        //       })
+        //   }
+
+            const files = await getImagesRecipe(req, recipe.id)
+
           
             return res.render('admin/recipes/show', {recipe, chef, files, req})
             
@@ -131,17 +173,19 @@ module.exports = {
             if (!recipe) return res.send('Receita não encontrada!')
 
             /* Get Images */
-            const results = await Recipe.recipeFiles(recipe.id) /* return   { id: 5, recipe_id: 52, file_id: 10 } */
-            let files = []
-            for (let i=0; i < results.rows.length; i++){
-                let img = await Recipe.files(results.rows[i].file_id)
-                img.rows[0].path = `${req.protocol}://${req.headers.host}${img.rows[0].path.replace("public", "")}`
-                files.push({
-                    id: img.rows[0].id,
-                    src:img.rows[0].path,
-                    name: img.rows[0].name
-                })
-            }
+            // const results = await Recipe.recipeFiles(recipe.id) /* return   { id: 5, recipe_id: 52, file_id: 10 } */
+            // let files = []
+            // for (let i=0; i < results.rows.length; i++){
+            //     let img = await Recipe.files(results.rows[i].file_id)
+            //     img.rows[0].path = `${req.protocol}://${req.headers.host}${img.rows[0].path.replace("public", "")}`
+            //     files.push({
+            //         id: img.rows[0].id,
+            //         src:img.rows[0].path,
+            //         name: img.rows[0].name
+            //     })
+            // }
+
+            const files = await getImagesRecipe(req, recipe.id)
         
             return res.render('admin/recipes/edit', {recipe, chefs, files, req})
         } catch (error) {
@@ -160,12 +204,16 @@ module.exports = {
             /* Inserindo novas Imagens */
             let filesId = []
             if (req.files.length != 0) {
-                const newFilesPromise = req.files.map(file =>File.create({...file}))
+                const newFilesPromise = req.files.map(file =>File.create({
+                    name: file.filename, 
+                    path: file.path
+                }))
                 await Promise.all(newFilesPromise)
+                
                 .then((values) => {
                     for (let index = 0; index < values.length; index++) {
-                        let element = values[index].rows[0]
-                        filesId.push(element.id)
+                        let element = values[index]
+                        filesId.push(element)
                     }
                 })
                 for (let fileId of filesId) {
