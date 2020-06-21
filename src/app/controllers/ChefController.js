@@ -1,6 +1,9 @@
+const { unlinkSync } = require('fs')
+
 const Chef = require('../models/Chef')
 const Recipe = require('../models/Recipe')
 const File = require('../models/File')
+
 
 async function getRecipeFirstImage(recipe, req) {
     let fileIdFirstImage = await (await Recipe.recipeFiles(recipe.id)).rows[0].file_id
@@ -47,47 +50,9 @@ module.exports = {
             console.error(error)
         }
     },
-    async post(req, res) {
-        try {
-            const keys = Object.keys(req.body)
-
-            for (key of keys) {
-                if (req.body[key] == "" && key != 'photos') {
-                    return res.send(`Preencha todos os campos! --> ${key}`)
-                }
-            }
-
-            if (req.files.length == 0) {
-                return res.send('Por favor, envie pelo menos uma imagem')
-            }
-
-            let file_id = ""
-            const filesPromise = req.files.map(file => File.create({...file}))
-            await Promise.all(filesPromise)
-                .then((values) => {
-                    file_id = values[0].rows[0]
-                })
-
-            await Chef.create({
-                name: req.body.name,
-                file_id: Object.values(file_id)
-            })
-
-            return res.redirect(`/admin/chefs`)
-
-        } catch (error) {
-            console.error(error)
-        }
-    },
     async show (req, res) {
         try {
-            const { id } = req.params
-            
-            const chef = await Chef.findOne({
-                where: {id}
-            })
-           
-            if (!chef) return res.send('Chefs não encontrados!')
+            const { chef } = req
 
             /* Get Chef Image */
             let img = await File.findById(chef.file_id)
@@ -98,7 +63,7 @@ module.exports = {
             /* Get All recipes by chef_id */
             let recipes = await Recipe.findAll({
                 where: {
-                    chef_id:id
+                    chef_id:chef.id
                 }
             })
 
@@ -113,41 +78,49 @@ module.exports = {
             )
 
 
-            /* Get Images - Recipes*/
-            // for (let recipe of recipes) {
-            //     const results = await Recipe.recipeFiles(recipe.id) /* return   { id: 5, recipe_id: 52, file_id: 10 } */
-            //     for (let i=0; i < 1; i++){ /* Pega só a primeira imagem de cada receita */
-            //         let img = await File.findAll({where:{id:results.rows[i].file_id}})
-            //         img[0].path = `${req.protocol}://${req.headers.host}${img[0].path.replace("public", "")}`
-            //         recipe['img'] = img[0].path
-            //         let chefName = await Chef.searchName(recipe.chef_id)
-            //         recipe['chef_name'] = Object.values(chefName.rows[0])
-            //     }
-            // }
-
-
             return res.render('admin/chefs/show', {chef, recipes, req})
             
         } catch (error) {
             console.error(error)
         }
     },
+    async post(req, res) {
+        try {
+            let file_id = ""
+            const filesPromise = req.files.map(file => File.create({
+                name: file.filename,
+                path: file.path
+            }))
+            console.log(filesPromise)
+            await Promise.all(filesPromise)
+                .then((values) => {
+                    file_id = values[0]
+                })
+
+            await Chef.create({
+                name: req.body.name,
+                file_id: file_id
+            })
+
+            return res.redirect(`/admin/chefs`)
+
+        } catch (error) {
+            console.error(error)
+        }
+    },
     async edit (req, res) {
         try {
-            const chef = await Chef.findById(req.params.id)
-
-            if (!chef) return res.send('Chef não encontrado!')
-    
+            const { chef } = req
             /* Get Images */
             const avatar_id = chef.file_id
-            let img = await Chef.files(avatar_id)
+            let img = await File.findById(avatar_id)
 
             let files = []
-            img.rows[0].path = `${req.protocol}://${req.headers.host}${img.rows[0].path.replace("public", "")}`
+            img.path = `${req.protocol}://${req.headers.host}${img.path.replace("public", "")}`
             files.push({
-                id: img.rows[0].id,
-                src:img.rows[0].path,
-                name: img.rows[0].name
+                id: img.id,
+                src:img.path,
+                name: img.name
             })
 
             return res.render(`admin/chefs/edit`, {chef, files, req})
@@ -159,41 +132,48 @@ module.exports = {
     async put (req, res) {
         try {
             const keys = Object.keys(req.body)
-
             for (key of keys) {
                 if (req.body[key] == "" && key != "removed_files") {
                     return res.send(`Preencha todos os campos!  ---> ${key}`)
                 }
             }
 
-            let avatar_id = ""
-            if (req.files.length != 0) {
-                const newFilesPromise = req.files.map(file =>File.create({ ...file }))
-                await Promise.all(newFilesPromise)
-                .then((values) => {
-                    avatar_id = Object.values(values[0].rows[0])
-                })
-    
-                Chef.update(req.body.id, { name: req.body.name, file_id: avatar_id })
-            }
-            
+            let newFileId = 0
+            let removedFiles = 0
+            let pathRemovedFiles = ""
+
             if (req.body.removed_files) {
-                //1, 2, 3, 
-                const removedFiles = req.body.removed_files.split(",") //[1, 2, 3, ]
-                const lastIndex = removedFiles.length - 1
-                removedFiles.splice(lastIndex, 1) // [1, 2, 3]
-                
-                const removedFilesPromise = removedFiles.map(id => File.delete(id))
-                
-                await Promise.all(removedFilesPromise)
-            }
+                newFileId = await File.create({
+                    name: req.files[0].filename,
+                    path: req.files[0].path
+                })
+
+                removedFiles = req.body.removed_files.replace(/,/g, "")
+
+                const results = await File.findById(removedFiles)
+                pathRemovedFiles =  results.path
             
-            if (!req.body.removed_files){
-                await Chef.update(req.body.id, {
+                let chef = await Chef.findById(req.body.id)
+    
+                Chef.update(req.body.id, {
                     name: req.body.name,
+                    file_id: newFileId || chef.file_id
+                }).then(() => {
+                    File.delete(removedFiles)
+                    unlinkSync(pathRemovedFiles)
                 })
             }
 
+            if (!req.body.removed_files) {
+                let chef = await Chef.findById(req.body.id)
+    
+                Chef.update(req.body.id, {
+                    name: req.body.name,
+                    file_id: chef.file_id
+                })
+            }
+
+            
             return res.redirect(`/admin/chefs`)
         }
         catch(error) {
@@ -201,20 +181,22 @@ module.exports = {
         }
     },
     async delete(req, res) {
-        const recipes = await Recipes.findAll({
-            where: {
-                chef_id: req.body.id
-            }
-        })
+        // const recipes = await Recipe.findAll({
+        //     where: {
+        //         chef_id: req.body.id
+        //     }
+        // })
         
-        if (Object.keys(recipes).length > 0) {
-            return res.send("Este chef não pode ser apagado pois ele possui receitas cadastradas.")
-        }
+        // if (Object.keys(recipes).length > 0) {
+        //     return res.send("Este chef não pode ser apagado pois ele possui receitas cadastradas.")
+        // }
 
         const chef = await Chef.findById(req.body.id)
+        const fileId = await File.findById(chef.file_id)
     
         await Chef.delete(req.body.id)
-        await File.deleteChefAvatar(chef.file_id)
+        await File.delete(chef.file_id)
+        unlinkSync(fileId.path)
 
         return res.redirect(`/admin/chefs`)
     }

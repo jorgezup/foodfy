@@ -12,18 +12,16 @@ module.exports = {
         `, [id])
     }, 
     search(params) {
-        const { filter } = params
+        const filter = params
 
-        let query = "",
-            filterQuery = `WHERE`
-
-        filterQuery = `
-            ${filterQuery} recipes.title ILIKE '%${filter}%'
+        let query = `
+            SELECT * FROM recipes
+                WHERE 1 = 1
         `
-
-        query = `
-            SELECT * FROM recipes ${filterQuery}
-        `
+        
+        if (filter) {
+            query += ` AND recipes.title ILIKE '%${filter}%'`
+        }
 
         return db.query(query)
     }

@@ -97,23 +97,15 @@ const Base = {
             let query = `UPDATE ${this.table} SET 
                 ${update.join(',')} WHERE id = ${id}`
 
-
-            db.query(query)
-
-            return
+            
+            return db.query(query)
         } catch (error) {
             console.error(error)
         }
     },
     delete(id) {
         return db.query(`DELETE FROM ${this.table} WHERE id =${id}`)
-    },
-    // files(id) {
-    //     return db.query(`
-    //         SELECT * FROM files WHERE id = $1
-    //     `, [id])
-    // }
-
+    }
 }
 
 module.exports = Base

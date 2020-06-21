@@ -84,6 +84,11 @@ async function update(req, res, next) {
         where: {email}
     })
 
+    if ((!user)||(user==undefined)) return res.render("admin/user/edit", {
+        user: req.body,
+        error: 'E-mail não encontrado, favor verifique.'
+    })
+
     if (user.id != req.body.id) return res.render("admin/user/edit", {
         user: req.body,
         error: 'Este e-mail já está sendo utilizado.'
@@ -93,12 +98,13 @@ async function update(req, res, next) {
     user = await User.findOne({ where: {id} })
 
     const passed = await compare(password, user.password)
-
-    if (!passed) return res.render('admin/user/edit', {
-        user: req.body,
-        error: "Senha incorreta"
-    })
-
+    console.log(user)
+    if (!passed) {
+        return res.render('admin/user/edit', {
+            user: user,
+            error: "Senha incorreta"
+        }) 
+    }
     req.user = user 
 
     next()
@@ -107,7 +113,6 @@ async function update(req, res, next) {
 async function remove(req, res, next) {
     const userId = req.session.userId
     const user = await User.findById(req.body.id)
-    console.log(user)
 
     if (userId == req.body.id) return res.render('admin/user/edit-admin', {
         user:user,

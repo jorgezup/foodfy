@@ -14,7 +14,7 @@
 			<div class="botoes edit">
 				<button type="submit" class="button salvar">Salvar receita</button>
 				</form>
-				<form action="/admin/recipes?_method=DELETE" method="POST">
+				<form id="form-delete" action="/admin/recipes?_method=DELETE" method="POST">
 					<input type="hidden" name="id" value="{{recipe.id}}">
 					<button type="submit" class="button delete">Deletar</button>
 				</form>
@@ -23,5 +23,14 @@
 {% endblock %}
 
 {% block script %}
-	<script src="/scripts-ingrediente.js"></script>
+	<script>
+		const formDelete = document.querySelector("#form-delete")
+		formDelete.addEventListener("submit", function (event) {
+			const confirmation = confirm("Tem certeza que deseja excluir esta receita ?")
+			if (!confirmation) {
+				event.preventDefault()
+			}
+		})
+	</script>
+
 {% endblock %}
