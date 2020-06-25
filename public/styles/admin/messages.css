@@ -43,6 +43,42 @@
     background-color: green;
 }
 
+/* Lottie */
+.container .card {
+    width: 500px;
+
+    margin: 50px auto;
+
+    text-align: center;
+
+    align-items: center;
+}
+
+.success-lottie,
+.error-lottie {
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.not-found {
+    height: 500px;
+}
+
+.container .card div{
+    margin-bottom: 20px;
+}
+
+.container .card div h2 {
+    font-size: 2.4rem;
+}
+
+.container .card a{
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--purple);
+}
+
+
 
 
 

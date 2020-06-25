@@ -117,17 +117,3 @@ async function init() {
 }
 
 init()
-
-
-// let recipeImage = fs.readdirSync(imageFolderRecipes)
-
-// let image = recipeImage[Math.floor(Math.random() * recipeImage.length)]
-// let imageSource = imageFolderRecipes+image
-// let destinationFolder = `public/images/${image}`
-
-// fs.copyFile(imageSource, destinationFolder, (err) => {
-//     if (err) throw err;
-//     // console.log('source.txt was copied to destination.txt');
-// });
-
-// console.log(Date.now().toString())

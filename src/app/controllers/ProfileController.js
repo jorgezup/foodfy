@@ -10,7 +10,6 @@ module.exports = {
     async put(req, res) {
         try {
             const { user } = req
-            console.log(user.name)
             let { name, email } = req.body
 
             await User.update(user.id, {

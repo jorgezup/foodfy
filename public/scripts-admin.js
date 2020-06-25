@@ -40,6 +40,23 @@ const Validate = {
             error,
             value
         }
+    },
+    allFields(event) {
+        const items = document.querySelectorAll('input, select')
+        const removedFiles = document.querySelector('input[name="removed_files"]')
+        for (item of items) {
+            if(!removedFiles) {
+                if(item.value == "") {
+                    const message = document.createElement('div')
+                    message.classList.add('messages')
+                    message.classList.add('error')
+                    message.innerHTML = 'Preencha todos os campos!'
+                    document.querySelector('body').append(message)
+    
+                    event.preventDefault()
+                }
+            }
+        }
     }
 }
 

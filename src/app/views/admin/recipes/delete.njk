@@ -1,0 +1,35 @@
+{% extends "admin/layout-admin.njk" %}
+
+{% block content %}
+
+	<div class="container">
+		<div class="card">
+			<div class="success-lottie"></div>
+			<div>
+				<h2>Receita deletada com sucesso</h2>
+			</div>
+
+			<a href="/admin/recipes">Minhas receitas</a>
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script src="/lottie.min.js"></script>
+
+	<script>
+		const element = document.querySelector('.success-lottie')
+
+		lottie.loadAnimation({
+			container: element, // the dom element that will contain the animation
+			renderer: 'svg',
+			loop: false,
+			autoplay: true,
+			path: '/13605-deleted-successfully.json' // the path to the animation json
+		});
+
+		setTimeout(() => {
+			window.location.href = '/admin/recipes'
+		}, 2300)
+	</script>
+{% endblock %}

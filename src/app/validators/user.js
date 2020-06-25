@@ -23,7 +23,7 @@ async function show(req, res, next) {
         where: {id}
     })
 
-    if (!user) return res.render('user/register', {
+    if (!user) return res.render('admin/user/register', {
         error: "Usuário não encontrado"
     })
     
@@ -33,11 +33,12 @@ async function show(req, res, next) {
 }
 
 async function post(req, res, next) {
+    const isAdmin = req.isAdmin
 
     const fillAllFields = checkAllFields(req.body)
 
     if (fillAllFields) {
-        return res.render('user/register', fillAllFields)
+        return res.render('admin/user/register', fillAllFields, isAdmin)
     }
 
     //verificar se o email já existe
@@ -46,16 +47,18 @@ async function post(req, res, next) {
         where: {email}
     })
 
-    if (user) return res.render("user/register", {
+    if (user) return res.render("admin/user/register", {
         user: req.body,
-        error: 'Usuário já cadastrado'
+        error: 'Usuário já cadastrado',
+        isAdmin
     })
 
     //verificar se as senhas são iguais
     if (password != passwordRepeat) {
-        return res.render("user/register", {
+        return res.render("admin/user/register", {
             user: req.body,
-            error: 'Senha não confere'
+            error: 'Senha não confere',
+            isAdmin
         })
     }
 
@@ -63,11 +66,13 @@ async function post(req, res, next) {
 }
 
 async function update(req, res, next) {
+    const isAdmin = req.isAdmin
+    
     // verificar se todos os campos preenchidos
     const fillAllFields = checkAllFields(req.body)
 
     if (fillAllFields) {
-        return res.render('admin/user/edit', fillAllFields)
+        return res.render('admin/user/edit', fillAllFields, isAdmin)
     }
 
     // verificar se a senha está preenchida
@@ -75,7 +80,8 @@ async function update(req, res, next) {
 
     if (!password) return res.render('admin/user/edit', {
         user: req.body,
-        error: "Insira sua senha para atualizar seu cadastro"
+        error: "Insira sua senha para atualizar seu cadastro",
+        isAdmin
     })
 
     //verificar se o email já existe
@@ -86,23 +92,25 @@ async function update(req, res, next) {
 
     if ((!user)||(user==undefined)) return res.render("admin/user/edit", {
         user: req.body,
-        error: 'E-mail não encontrado, favor verifique.'
+        error: 'E-mail não encontrado, favor verifique.',
+        isAdmin
     })
 
     if (user.id != req.body.id) return res.render("admin/user/edit", {
         user: req.body,
-        error: 'Este e-mail já está sendo utilizado.'
+        error: 'Este e-mail já está sendo utilizado.',
+        isAdmin
     })
 
     // password match
     user = await User.findOne({ where: {id} })
 
     const passed = await compare(password, user.password)
-    console.log(user)
     if (!passed) {
         return res.render('admin/user/edit', {
             user: user,
-            error: "Senha incorreta"
+            error: "Senha incorreta",
+            isAdmin
         }) 
     }
     req.user = user 
@@ -110,14 +118,55 @@ async function update(req, res, next) {
     next()
 }
 
+async function updateByAdmin(req, res, next) {
+    const isAdmin = req.isAdmin
+    
+    // verificar se todos os campos preenchidos
+    const fillAllFields = checkAllFields(req.body)
+
+    if (fillAllFields) {
+        return res.render('admin/user/edit-admin', fillAllFields, isAdmin)
+    }
+
+    // // verificar se a senha está preenchida
+    // const { id, password } = req.body
+
+    // if (!password) return res.render('admin/user/edit', {
+    //     user: req.body,
+    //     error: "Insira sua senha para atualizar seu cadastro",
+    //     isAdmin
+    // })
+
+    //verificar se o email já existe
+    const { email } = req.body
+    let user = await User.findOne({
+        where: {email}
+    })
+
+    if ((!user)||(user==undefined)) return res.render("admin/user/edit-admin", {
+        user: req.body,
+        error: 'E-mail não encontrado, favor verifique.',
+        isAdmin
+    })
+
+    if (user.id != req.body.id) return res.render("admin/user/edit-admin", {
+        user: req.body,
+        error: 'Este e-mail já está sendo utilizado.',
+        isAdmin
+    })
+
+    req.user = user 
+
+    next()
+}
+
 async function remove(req, res, next) {
+    const isAdmin = req.isAdmin
+
     const userId = req.session.userId
     const user = await User.findById(req.body.id)
 
-    if (userId == req.body.id) return res.render('admin/user/edit-admin', {
-        user:user,
-        error: "Você não pode deletar sua própria conta."
-    })
+    if (userId == req.body.id) return res.render('admin/user/deleteError', {isAdmin})
 
     req.user = user
     
@@ -130,5 +179,6 @@ module.exports = {
     post,
     show,
     update,
+    updateByAdmin,
     remove
 }

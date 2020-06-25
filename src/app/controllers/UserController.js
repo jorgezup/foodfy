@@ -12,13 +12,16 @@ const { unlinkSync } = require('fs')
 
 module.exports = {
     registerForm(req, res) {
-        return res.render('admin/user/register')
+        const isAdmin = req.isAdmin
+         
+        return res.render('admin/user/register', {isAdmin})
     },
     async show(req, res) {
         try {
+            const isAdmin = req.isAdmin
+
             const { user } = req
-            const isAdmin = req.user.is_admin
-    
+                
             if (!user.is_admin) {
                 return res.render('admin/user/edit', { user, isAdmin })
             }
@@ -29,9 +32,10 @@ module.exports = {
     },
     async list(req, res) {
         try {
+            const isAdmin = req.isAdmin
+
             const users = await User.findAll()
-            const isAdmin = req.user.is_admin
-    
+                
             return res.render('admin/user/list-users', { users, isAdmin })
             
         } catch (error) {
@@ -40,6 +44,8 @@ module.exports = {
     },
     async post(req, res) {
         try {
+            const isAdmin = req.isAdmin
+
             let { name, email, is_admin } = req.body
 
             const password = crypto.randomBytes(4).toString("hex")
@@ -69,23 +75,25 @@ module.exports = {
         } catch (error) {
             console.error(error)
         }
-
-
     },
     async edit(req, res) {
         try {
+            const isAdmin = req.isAdmin
+
             const user = await User.findById(req.params.id)
 
             if (!user) return res.render(`admin/index`, {
                 error: "Usuário não encontrado!"
             })
-            return res.render(`admin/user/edit-admin`, { user })
+            return res.render(`admin/user/edit-admin`, { user, isAdmin })
         } catch (error) {
             console.error(error)
         }
     },
     async put(req, res) {
         try {
+            const isAdmin = req.isAdmin
+
             const keys = Object.keys(req.body)
 
             for (key of keys) {
@@ -112,6 +120,8 @@ module.exports = {
     },
     async delete(req, res) {
         try {
+            const isAdmin = req.isAdmin
+
             const recipes = await Recipe.findAll({ where: { user_id: req.user.id } })
             if (recipes != "") {
                 recipes.forEach(async function (recipe) {
@@ -120,7 +130,6 @@ module.exports = {
                         let files = recipeFiles.rows[i]
                         let fileId = Number(Object.values(files))
                         const path = await File.findById(fileId)
-                        console.log(path)
     
                         await RecipeFile.delete(fileId)
                         await File.delete(fileId)
@@ -133,13 +142,15 @@ module.exports = {
 
             User.delete(req.user.id)
 
-            return res.redirect('/admin/users')
+            // return res.redirect('/admin/users')
+            return res.render('admin/user/deleteSuccess')
 
         } catch (error) {
             console.error(error)
             return res.render('admin/user/edit-admin', {
                 user: req.user,
-                error: "Erro ao tentar deletar a conta 11111111111"
+                error: "Erro ao tentar deletar a conta!",
+                isAdmin
             })
         }
     }

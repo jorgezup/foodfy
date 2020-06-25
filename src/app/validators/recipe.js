@@ -45,9 +45,11 @@ async function show(req, res, next) {
         where: {id}
     })
 
-    if (!recipe) return res.render('admin/recipes/index', {
-        error: "Receita não encontrada"
-    })
+    // if (!recipe) return res.render('admin/recipes/index', {
+    //     error: "Receita não encontrada"
+    // })    
+    
+    if (!recipe) return res.render('admin/not-found')
     
     req.recipe = recipe
 
@@ -58,17 +60,11 @@ async function post(req, res, next) {
     const fillAllFields = await checkAllFields(req)
 
     if (fillAllFields) {
-        return res.render('admin/recipes/create', fillAllFields)
+        return res.send('Por favor preencha todos os campos!')
     }
 
-    if (req.files.length == 0) {
-        let chefs = await Chef.findAll()
-
-        return res.render('admin/recipes/create', {
-            recipe:req.body,
-            chefs,
-            error: 'Por favor, envie pelo menos uma imagem'
-        })
+    if (!req.files || req.files.length == 0) {
+        return res.send('Por favor insira pelo menos uma imagem!')
     }
 
     next()
@@ -80,9 +76,12 @@ async function edit(req, res, next) {
         where: {id}
     })
     
-    if (!recipe) return res.status(404).render('admin/not-found', {
-        error: "Receita não encontrada"
-    })
+    // if (!recipe) return res.status(404).render('admin/not-found', {
+    //     error: "Receita não encontrada"
+    // })
+
+    if (!recipe) return res.render('admin/not-found')
+
 
     const user = await User.findById(req.session.userId)
 

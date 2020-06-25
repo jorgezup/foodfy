@@ -22,7 +22,7 @@ async function getChefName(chefId) {
 module.exports = {
     async index(req, res) {
         try {
-            const isAdmin = req.user.is_admin
+            const isAdmin = req.isAdmin
 
             const chefs = await Chef.findAll()
             
@@ -43,7 +43,7 @@ module.exports = {
     },
     create(req, res) {
         try {
-            const isAdmin = req.user.is_admin
+            const isAdmin = req.isAdmin
 
             return res.render('admin/chefs/create', {isAdmin})
         } catch (error) {
@@ -52,6 +52,8 @@ module.exports = {
     },
     async show (req, res) {
         try {
+            const isAdmin = req.isAdmin
+
             const { chef } = req
 
             /* Get Chef Image */
@@ -78,7 +80,7 @@ module.exports = {
             )
 
 
-            return res.render('admin/chefs/show', {chef, recipes, req})
+            return res.render('admin/chefs/show', {chef, recipes, isAdmin})
             
         } catch (error) {
             console.error(error)
@@ -86,12 +88,13 @@ module.exports = {
     },
     async post(req, res) {
         try {
+            const isAdmin = req.isAdmin
+
             let file_id = ""
             const filesPromise = req.files.map(file => File.create({
                 name: file.filename,
                 path: file.path
             }))
-            console.log(filesPromise)
             await Promise.all(filesPromise)
                 .then((values) => {
                     file_id = values[0]
@@ -102,14 +105,19 @@ module.exports = {
                 file_id: file_id
             })
 
-            return res.redirect(`/admin/chefs`)
+            // return res.redirect(`/admin/chefs`)
+            return res.render('admin/chefs/success', {isAdmin})
+
 
         } catch (error) {
             console.error(error)
+            return res.render('admin/chefs/error', {isAdmin})
         }
     },
     async edit (req, res) {
         try {
+            const isAdmin = req.isAdmin
+
             const { chef } = req
             /* Get Images */
             const avatar_id = chef.file_id
@@ -123,7 +131,7 @@ module.exports = {
                 name: img.name
             })
 
-            return res.render(`admin/chefs/edit`, {chef, files, req})
+            return res.render(`admin/chefs/edit`, {chef, files, isAdmin})
 
         } catch (error) {
             console.error(error)
@@ -190,6 +198,7 @@ module.exports = {
         // if (Object.keys(recipes).length > 0) {
         //     return res.send("Este chef não pode ser apagado pois ele possui receitas cadastradas.")
         // }
+        const isAdmin = req.isAdmin
 
         const chef = await Chef.findById(req.body.id)
         const fileId = await File.findById(chef.file_id)
@@ -198,6 +207,8 @@ module.exports = {
         await File.delete(chef.file_id)
         unlinkSync(fileId.path)
 
-        return res.redirect(`/admin/chefs`)
+        // return res.redirect(`/admin/chefs`)
+        return res.render('admin/chefs/delete', {isAdmin})
+
     }
 }

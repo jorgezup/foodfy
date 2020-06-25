@@ -35,14 +35,11 @@ async function post(req, res, next) {
     const fillAllFields = checkAllFields(req.body)
 
     if (fillAllFields) {
-        return res.render('admin/chefs/create', fillAllFields)
+        return res.send('Por favor preencha todos os campos!')
     }
 
-    if (req.files.length == 0) {
-        return res.render('admin/chefs/create', {
-            name:req.body.name,
-            error: 'Por favor, envie pelo menos uma imagem'
-        })
+    if (!req.files || req.files.length == 0) {
+        return res.send('Por favor insira pelo menos uma imagem!')
     }
 
     next()
@@ -72,9 +69,7 @@ async function remove(req, res, next) {
     })
     
     if (Object.keys(recipes).length > 0) {
-        return res.render("admin/index", {
-            error: "Este chef não pode ser apagado pois possui receitas cadastradas."
-        })
+        return res.render("admin/chefs/hasRecipes")
     }
 
     next()

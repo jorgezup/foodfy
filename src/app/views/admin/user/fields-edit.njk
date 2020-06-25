@@ -10,11 +10,12 @@
         name="email" 
         value="{{user.email}}"
         onblur="Validate.apply(this,'isEmail')"
+        required
     >
 </div>
 
 <div class="senha">
     <label>Senha</label>
-    <input type="password" name="password">
+    <input type="password" name="password" required>
 </div>
 

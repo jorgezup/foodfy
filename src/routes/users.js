@@ -7,7 +7,7 @@ const ProfileController = require('../app/controllers/ProfileController')
 
 const UserValidator = require('../app/validators/user')
 const SessionValidator = require('../app/validators/session')
-const { isLoggedRedirect, isAdmin, onlyUsers } = require('../app/middlewares/session')
+const { isLoggedRedirect, onlyAdmin, onlyUsers, verifyIsAdmin } = require('../app/middlewares/session')
 
 
 // login /logout 
@@ -29,11 +29,11 @@ routes.get('/profile', onlyUsers, UserValidator.show, ProfileController.index) /
 routes.put('/profile', onlyUsers, UserValidator.update, ProfileController.put)// Editar o usuário logado
 
 // // Rotas que o administrador irá acessar para gerenciar usuários
-routes.get('/users', onlyUsers, isAdmin , UserController.list) //Mostrar a lista de usuários cadastrados
-routes.get('/new-user', onlyUsers, isAdmin, UserController.registerForm) //Cadastrar um usuário
-routes.post('/users', onlyUsers, isAdmin, UserController.post) //Cadastrar um usuário
-routes.get('/users/:id/edit', onlyUsers, isAdmin, UserController.edit) //Cadastrar um usuário
-routes.put('/users', onlyUsers, isAdmin, UserController.put) // Editar um usuário
-routes.delete('/users', isAdmin, UserValidator.remove, UserController.delete) // Deletar um usuário
+routes.get('/users', onlyUsers, verifyIsAdmin, onlyAdmin, UserController.list) //Mostrar a lista de usuários cadastrados
+routes.get('/new-user', onlyUsers, verifyIsAdmin, onlyAdmin, UserController.registerForm) //Cadastrar um usuário
+routes.post('/users', onlyUsers, verifyIsAdmin, onlyAdmin, UserValidator.post, UserController.post) //Cadastrar um usuário
+routes.get('/users/:id/edit', onlyUsers, verifyIsAdmin, onlyAdmin, UserController.edit) //Cadastrar um usuário
+routes.put('/users', onlyUsers, verifyIsAdmin, onlyAdmin, UserValidator.updateByAdmin, UserController.put) // Editar um usuário
+routes.delete('/users', onlyAdmin, verifyIsAdmin, UserValidator.remove, UserController.delete) // Deletar um usuário
 
 module.exports = routes
