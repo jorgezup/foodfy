@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        {% include "admin/parts/styles.njk" %}
+        {% block head %}{% endblock %}
+        <title>Foodfy - Admin</title>
+    </head>
+    <body>
+        {% include "admin/parts/messages.njk" %}
+
+        <div class="container-admin">
+            <header>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="/admin"><img src="/logo.png" alt="Logo Foodfy"></a>
+                        </li>
+                        <li>
+                            <a href="/admin/recipes">Receitas</a>
+                        </li>
+                        <li>
+                            <a href="/admin/chefs">Chefs</a>
+                        </li>
+                        {% if isAdmin %}
+                            <li>
+                                <a href="/admin/users">Usuários</a>
+                            </li>
+                        {% else %}
+                            <li>
+                                <a href="/admin/profile">Usuário</a>
+                            </li>
+                        {% endif %}
+
+                        <li class="right">
+                            <form action="/admin/logout" method="POST">
+                                <button>Sair</button>
+                            </form>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+        </div>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </body>
+    <script src="/scripts-admin.js"></script>
+    {% block script %}{% endblock %}
+</html>

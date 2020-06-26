@@ -1,0 +1,35 @@
+{% extends "admin/layout-admin.njk" %}
+
+{% block content %}
+
+	<div class="container">
+		<div class="card">
+			<div class="success-lottie"></div>
+			<div>
+				<h2>Usuário deletado com Sucesso</h2>
+			</div>
+
+			<a href="/admin/users">Usuários</a>
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script src="/lottie.min.js"></script>
+
+	<script>
+		const element = document.querySelector('.success-lottie')
+
+		lottie.loadAnimation({
+			container: element, // the dom element that will contain the animation
+			renderer: 'svg',
+			loop: false,
+			autoplay: true,
+			path: '/782-check-mark-success.json' // the path to the animation json
+		});
+
+		setTimeout(() => {
+			window.location.href = '/admin/users'
+		}, 2500)
+	</script>
+{% endblock %}

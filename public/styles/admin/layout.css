@@ -1,0 +1,302 @@
+div.container-admin {
+    background-color: var(--principal-color);
+}
+
+div.container-admin header {
+    width: 940px;
+    height: 80px;   
+    
+    margin: 0 auto;
+}
+
+div.container-admin header nav {
+    display: flex;
+    flex-direction: row;
+}
+
+div.container-admin header nav ul{
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+    margin-top: 27px;
+}
+
+div.container-admin header nav ul li:nth-child(1) {
+    margin-right: 50px;
+}
+
+div.container-admin header nav ul li {
+    margin-right: 25px;
+}
+
+div.container-admin header nav ul li.right {
+    margin-right: initial;
+    margin-left: auto;
+}
+
+
+div.container-admin header nav ul li a,
+div.container-admin header nav ul li.right button {
+    color: #999999;
+    width: 100%;
+    
+    font-weight: bold;
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+    
+    text-transform: uppercase;
+}
+
+/* Botão de Sair */
+div.container-admin header nav ul li.right button {
+    background-color: initial;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+/* Header Active */
+div.container-admin header nav ul li a.active {
+    color: #FFFFFF;
+}
+
+/* Index */
+div.container div.center {
+    margin-top: 50px;
+}
+
+div.container div.center h3 {
+    font-family: 'Helvetica', sans-serif;
+    font-weight: bold;
+    font-size: 2.4rem;
+
+    margin-bottom: 20px;
+}
+
+div.container div.center p {
+    font-family: 'Helvetica', sans-serif;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+}
+
+div.container div.center p:first-of-type {
+    margin-bottom: 20px;
+}
+
+/*  H2 da página e botões */
+div.container div.title {
+    margin: 50px 0 24px 0;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+div.container div.title  h2{
+    color: var(--principal-color);
+    
+    font-size: 2.4rem;
+    font-weight: bold;
+}
+
+/* Botoes */
+div.botoes {
+    margin-left: auto;
+}
+
+div.botoes .button {
+    padding: 9px 20px;
+    
+    border-radius: 4px;
+
+}
+
+div.botoes .button.salvar {
+    background-color: var(--purple);
+    cursor: pointer;
+}
+
+div.botoes .button.delete {
+    background-color: var(--red);
+    margin-right: 10px;
+}
+
+div.botoes button[type="submit"],
+div.botoes a.button.salvar {
+    color: white;
+    
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+
+div.botoes.edit {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 7px 0 0 0;
+}
+
+/* Label */
+div.container label {
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.6rem;
+
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+div.container label:first-of-type {
+    margin-top: initial;
+}
+
+/* Inputs */
+div.container form input[type="text"],
+div.container form input[type="email"],
+div.container form input[type="password"],
+div.container form select,
+div.container form textarea {
+    width: 100%;
+    height: 50px;
+    
+    background-color: white;
+
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+
+    padding: 15px 20px;
+    /* margin-bottom: 10px; */
+
+    resize: none;
+}
+
+/* Button Adicionar */
+div.card-chef__info a.visualizar,
+div.container button.adicionar-item {
+    display: block;
+
+    font-weight: bold;
+    font-size: 1.6rem;
+
+    color: var(--purple);
+    
+    background-color: initial;
+
+    cursor: pointer;
+}
+
+div.card-chef__info a.visualizar {
+    margin-bottom: 15px;
+}
+
+
+
+/* div.botoes.edit {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 7px;
+} */
+
+/* Visualizar Chefs */
+div.card-chef__info a.visualizar {
+    margin-top: 10px;
+
+    font-size: 1.4rem;
+}
+
+/* Photos UPLOAD */
+div.container form div#photos-upload {
+    position: relative;
+    overflow: hidden;
+    
+    width: 149px;
+    height: 149px;
+    
+    background-color: #FFFFFF;
+    
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+
+div.container form div#photos-upload i {
+    color: #777777;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.container form #photos-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: block;
+    overflow: hidden;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+
+    cursor: pointer;
+}
+
+div.container form div#photos-preview {
+    display: grid;
+    grid-template-columns:  repeat(3, 1fr);
+    gap: 8px;
+
+    width: 100%;
+    margin: 8px 0;
+}
+
+
+div.container form div#photos-preview img{
+    width: 100%;
+    height: 150px;
+    
+    object-fit: contain;
+}
+
+#photos-preview .photo{
+    position: relative;
+}
+
+#photos-preview .photo i{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #777777;
+
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    font-size: 500%;
+    cursor: pointer;
+    
+    transition: opacity 200ms;
+    
+    opacity: 0;
+}
+#photos-preview .photo:hover i{
+    opacity: 1;
+} 
+

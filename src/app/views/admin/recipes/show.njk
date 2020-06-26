@@ -1,0 +1,85 @@
+{% extends "admin/layout-admin.njk" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/styles/admin/show.css">
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="container">
+        <div class="title">
+            <h2>Receita: {{recipe.title}}</h2>
+            {% if (req.user.id == recipe.user_id) or (isAdmin==true) %}
+                <div class="botoes">
+                    <a class="button salvar" href="/admin/recipes/{{recipe.id}}/edit" >Editar receita</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="gallery">
+            <div class="highlight">
+                {% if not recipe.files[0] %}
+                    <img src="https://placehold.it/500x500?text=RECEITA SEM FOTO" alt="">
+                {% else  %}
+                    <img 
+                        src="{{recipe.files[0].src}}" 
+                        alt="{{recipe.files[0].name}}"
+                        onclick="Lightbox.open()"
+                    >
+                {% endif %}
+
+                <div class="lightbox-target">
+                    <img src="{{recipe.files[0].src}}" alt="{{recipe.files[0].name}}">
+                    <a 
+                        href="#" 
+                        class="lightbox-close"
+                        onclick="Lightbox.close()"
+                    >
+                        <i class="material-icons">close</i>
+                    </a>
+                </div>
+            </div>
+            <div class="gallery-preview">
+                <div>
+                    {% for image in recipe.files %}
+                        <img 
+                            src="{{image.src}}" 
+                            alt="{{image.name}}"
+                            {% if loop.index0 == 0 %} 
+                                class="active"
+                            {% endif %}
+                            onclick="ImageGallery.setImage(event)"
+                        >
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="receita-detalhes">
+            <p>{{recipe.title}}</p>
+
+            <p>{{recipe.chef_name}}</p>
+
+            <div class="conteudo">
+                <p class="destaque">Ingredientes</p>
+                <ul>
+                    {%for ingredient in recipe.ingredients%}
+                        <li>{{ingredient}}</li>
+                    {%endfor%}
+                </ul>
+                <p class="destaque">Modo de preparo</p>
+                <ul>
+                    {%for prepar in recipe.preparation%}
+                        <li>{{prepar}}</li>
+                    {%endfor%}
+                </ul>
+
+                <p class="destaque">Informações Adicionais</p>
+                <p>{{recipe.information}}</p>
+            </div>
+                        
+        </div>
+    </div>
+{% endblock %}

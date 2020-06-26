@@ -1,0 +1,32 @@
+{% extends "admin/layout-admin.njk" %}
+
+{% block content %}
+
+	<div class="container">
+		<div class="card">
+			<div class="error-lottie"></div>
+			<div>
+				<h2>Desculpe! Não foi possível adicionar o chef.</h2>
+				<h2></h2>
+			</div>
+
+			<a href="#" onclick="history.back()">Tente novamente</a>
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script src="/lottie.min.js"></script>
+
+	<script>
+		const element = document.querySelector('.error-lottie')
+
+		lottie.loadAnimation({
+			container: element, // the dom element that will contain the animation
+			renderer: 'svg',
+			loop: false,
+			autoplay: true,
+			path: '/4970-unapproved-cross.json' // the path to the animation json
+		});
+	</script>
+{% endblock %}

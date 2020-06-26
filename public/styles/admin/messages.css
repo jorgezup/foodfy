@@ -1,0 +1,84 @@
+@keyframes hidemessage {
+    to {
+        top: -50px;
+        opacity: 0;
+    }
+}
+
+.messages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    color: white;
+    font-family: 'Helvetica', sans-serif;
+    font-size: 1.6rem;
+    font-weight: bold;
+
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    width: 344px;
+    height: 135px;
+    
+    z-index: 100;
+
+    opacity: 1;
+
+    animation: hidemessage 400ms 5s ease-out forwards;
+}
+
+.messages > p {
+    display: block;
+    padding: 0 16px;
+}
+
+.messages.errors {
+    background-color: var(--red);
+}
+
+.messages.success {
+    background-color: green;
+}
+
+/* Lottie */
+.container .card {
+    width: 500px;
+
+    margin: 50px auto;
+
+    text-align: center;
+
+    align-items: center;
+}
+
+.success-lottie,
+.error-lottie {
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.not-found {
+    height: 500px;
+}
+
+.container .card div{
+    margin-bottom: 20px;
+}
+
+.container .card div h2 {
+    font-size: 2.4rem;
+}
+
+.container .card a{
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--purple);
+}
+
+
+
+
+

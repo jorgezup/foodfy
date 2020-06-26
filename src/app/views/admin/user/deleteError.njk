@@ -1,0 +1,35 @@
+{% extends "admin/layout-admin.njk" %}
+
+{% block content %}
+
+	<div class="container">
+		<div class="card">
+			<div class="error-lottie"></div>
+			<div>
+				<h2>Desculpe! Você não pode deletar sua própria conta.</h2>
+				<h2></h2>
+			</div>
+
+			<a href="#" onclick="history.back()">Voltar</a>
+		</div>
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script src="/lottie.min.js"></script>
+
+	<script>
+		const element = document.querySelector('.error-lottie')
+
+		lottie.loadAnimation({
+			container: element, // the dom element that will contain the animation
+			renderer: 'svg',
+			loop: false,
+			autoplay: true,
+			path: '/7479-access-denied.json' // the path to the animation json
+		});
+		setTimeout(() => {
+			window.location.href = '/admin/users'
+		}, 3200)
+	</script>
+{% endblock %}

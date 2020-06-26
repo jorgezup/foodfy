@@ -1,0 +1,44 @@
+/* Variáveis de cores */
+:root {
+    --principal-color: #111111;
+    --purple: #6558C3;
+    --red: #DC4747;
+
+}
+
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+
+    text-decoration: none;
+    list-style-type: none;
+}
+
+html, body {
+    height: 150vh;
+}
+
+html {
+    /* a cada 1rem será considerado 10px */
+    font-size: 62.5%;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: 90%;
+    max-width: 940px;
+    margin: 0 auto;
+
+    position: relative;
+}

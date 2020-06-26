@@ -1,0 +1,16 @@
+<div>
+    <label>Email</label>
+    <input 
+        type="email" 
+        name="email" 
+        value="{{user.email}}"
+        onblur="Validate.apply(this,'isEmail')"
+        required
+    >
+</div>
+
+<div class="left senha">
+    <label>Senha</label>
+    <input type="password" name="password" required>
+</div>
+

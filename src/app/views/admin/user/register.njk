@@ -1,0 +1,26 @@
+{% extends "admin/layout-admin.njk" %}
+
+{% block head %}
+    <link rel="stylesheet" href="/styles/user/register.css">
+{% endblock %}
+
+{% block content %}
+
+	<div class="container user-register ">
+		<div class="title">
+			<h2>Criar Usuário</h2>
+		</div>
+		<form action="/admin/users" method="POST">
+
+			<div class="fields">
+				{% include "./fields.njk" %}
+			</div>
+
+			<div class="botoes edit" id="create-user">
+				<a class="button" id="cancelar" href="/admin/users">Cancelar</a>
+				<button type="submit" class="button salvar">Salvar</button>
+				{# <button type="submit" class="button" id="cancelar">Cancelar</button> #}
+			</form>
+		</div>
+	</div>
+{% endblock %}

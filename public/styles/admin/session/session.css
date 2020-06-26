@@ -1,0 +1,57 @@
+div.container.session  {
+    margin: 0 auto;
+    width: 500px;
+}
+
+div.container.session header {
+    margin-top: 20px;
+    margin-bottom: 146px;
+    text-align: center;
+}
+
+div.container-session img {
+    width: 100%;
+}
+
+section.card-login > h2 {
+    text-align: center;
+    font-size: 2.4rem;
+}
+
+section.card-login div.fields {
+    margin-top: 30px;
+    margin-bottom: 35px;
+}
+
+section.card-login div.fields > div{
+    margin-bottom: 35px;
+}
+
+section.card-login div.botoes.login {
+    display: flex;
+    align-items: center;
+}
+
+section.card-login div.botoes.login a{
+    font-family: 'Helvetica', sans-serif;
+    font-weight: bold;
+    font-size: 1.6rem;
+    color: #969696;
+}
+
+section.card-login div.botoes.login button{
+    margin-left: auto;
+}
+
+/* Input Error Login */
+@keyframes hideborder {
+    to {
+        border: 1px solid #dddddd;
+    }
+}
+
+section.card-login div.fields input.input-error {
+    border: 1px solid var(--red);
+
+    animation: hideborder 400ms 5s ease-out forwards;
+}
