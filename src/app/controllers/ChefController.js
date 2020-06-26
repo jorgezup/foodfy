@@ -26,7 +26,7 @@ module.exports = {
 
             const chefs = await Chef.findAll()
             
-            if (chefs == '') return res.render('admin/chefs/index', {req})
+            if (chefs == '') return res.render('admin/chefs/index', {isAdmin})
 
             for (let chef of chefs) {
                 /* Get Images */
@@ -186,18 +186,13 @@ module.exports = {
         }
         catch(error) {
             console.error(error)
+            return res.render('admin/chefs', {
+                error:"Aconteu um erro. Tente novamente!",
+                isAdmin
+            })
         }
     },
     async delete(req, res) {
-        // const recipes = await Recipe.findAll({
-        //     where: {
-        //         chef_id: req.body.id
-        //     }
-        // })
-        
-        // if (Object.keys(recipes).length > 0) {
-        //     return res.send("Este chef não pode ser apagado pois ele possui receitas cadastradas.")
-        // }
         const isAdmin = req.isAdmin
 
         const chef = await Chef.findById(req.body.id)

@@ -24,7 +24,8 @@ module.exports = {
 
                 if(recipes == '')
                     return res.render('admin/recipes/index', {
-                        error: 'Não há receitas cadastradas!'
+                        error: 'Não há receitas cadastradas!',
+                        isAdmin
                     })
             }
 
@@ -41,7 +42,8 @@ module.exports = {
             const chefs = await Chef.findAll()
             
             if (chefs == "") return res.render('admin/recipes/index', {
-                error: "Não é possível criar uma receita pois não há nenhum chef cadastrado"
+                error: "Não é possível criar uma receita pois não há nenhum chef cadastrado",
+                isAdmin
             })
             
             

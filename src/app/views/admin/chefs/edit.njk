@@ -28,7 +28,7 @@
                 name="photos" 
                 multiple
                 accept="images/*"
-                onchange="PhotosUpload.handleFileInput(event)"
+                onchange="PhotosUploadChef.handleFileInput(event)"
             >
         </div>
         <div id="photos-preview">
@@ -37,7 +37,7 @@
                     <div class="photo" id="{{image.id}}">
                         <img src="{{image.src}}" alt="{{image.name}}">
                         <i class="material-icons"
-                            onclick="PhotosUpload.removeOldPhoto(event)"
+                            onclick="PhotosUploadChef.removeOldPhoto(event)"
                         >       
                         delete_forever</i>
                     </div>
@@ -47,7 +47,7 @@
         </div>
     
         <div class="botoes edit">
-            <button type="submit" class="button salvar" onclick="PhotosUpload.checkAvatar(event)">Salvar chef</button>
+            <button type="submit" class="button salvar" onclick="PhotosUploadChef.checkAvatar(event)">Salvar chef</button>
             </form>
             <form action="/admin/chefs?_method=DELETE" method="POST">
                 <input type="hidden" name="id" value="{{chef.id}}">
@@ -55,8 +55,4 @@
             </form>
         </div>
 </div>
-{% endblock %}
-
-{% block script %}
-    <script src="/scripts-chef.js"></script>
 {% endblock %}

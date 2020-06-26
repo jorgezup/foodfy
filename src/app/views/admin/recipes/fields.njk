@@ -15,7 +15,7 @@
     {# <p>Selecione até 5 fotos</p> #}
 </div>
 <div id="photos-preview">
-    {% if recipe.files %}
+    {% if recipe.files or files %}
         {% for image in recipe.files %}
             <div class="photo" id="{{image.id}}">
                 <img src="{{image.src}}" alt="{{image.name}}">

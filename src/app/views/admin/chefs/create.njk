@@ -22,7 +22,7 @@
                     name="photos" 
                     multiple
                     accept="images/*"
-                    onchange="PhotosUpload.handleFileInput(event)"
+                    onchange="PhotosUploadChef.handleFileInput(event)"
                 >
             </div>
                 <div id="photos-preview">
@@ -31,7 +31,7 @@
                         <div class="photo" id="{{image.id}}">
                             <img src="{{image.src}}" alt="{{image.name}}">
                             <i class="material-icons"
-                                onclick="PhotosUpload.removeOldPhoto(event)"
+                                onclick="PhotosUploadChef.removeOldPhoto(event)"
                             >
                              delete_forever</i>
                         </div>
@@ -45,8 +45,4 @@
             </form>
         </div>
 
-    {% endblock %}
-
-    {% block script %}
-        <script src="/scripts-chef.js"></script>
     {% endblock %}

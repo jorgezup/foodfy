@@ -73,7 +73,6 @@ async function createChefs() {
 
         fs.copyFile(imageSource, destinationFolder, (err) => {
             if (err) throw err;
-            // console.log('source.txt was copied to destination.txt');
         });
 
         let file_id = await File.create({

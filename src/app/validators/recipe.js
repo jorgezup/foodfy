@@ -26,7 +26,6 @@ async function checkAllFields(req) {
     const keys = Object.keys(req.body)
     let chefs = await Chef.findAll()
     let files = await getImagesRecipe(req, req.body.id)
-    
     for(let key of keys) {
         if (req.body[key] == "" && key != 'information' && key != 'removed_files') {
             return {
@@ -44,10 +43,6 @@ async function show(req, res, next) {
     const recipe = await Recipe.findOne({
         where: {id}
     })
-
-    // if (!recipe) return res.render('admin/recipes/index', {
-    //     error: "Receita não encontrada"
-    // })    
     
     if (!recipe) return res.render('admin/not-found')
     
@@ -76,12 +71,8 @@ async function edit(req, res, next) {
         where: {id}
     })
     
-    // if (!recipe) return res.status(404).render('admin/not-found', {
-    //     error: "Receita não encontrada"
-    // })
 
     if (!recipe) return res.render('admin/not-found')
-
 
     const user = await User.findById(req.session.userId)
 
@@ -99,12 +90,13 @@ async function edit(req, res, next) {
 
 async function put(req, res, next) {
     const fillAllFields = await checkAllFields(req)
-
     if (fillAllFields) {
         return res.render('admin/recipes/edit', fillAllFields)
     }
 
     let files = await getImagesRecipe(req, req.body.id)
+
+
 
     if (req.body.removed_files) {
         const removedFilesLength = req.body.removed_files.split(',').length
